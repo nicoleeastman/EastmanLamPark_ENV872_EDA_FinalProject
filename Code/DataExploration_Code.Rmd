@@ -1,0 +1,30 @@
+```{r}
+library(tidyverse)
+library(dplyr)
+library(plyr)
+library(lubridate)
+library(stringr)
+library(readr)
+
+```
+
+```{r}
+setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
+combined_sea_level_data <- read.csv("Code/combine_sealevel.csv")
+
+sea_level <- ggplot(combined_sea_level_data, aes(x=Date, y=MSL..ft., group = Station))+geom_line(aes(color = Station)) +
+    labs(title = "Mean Sea Levels (2010-2022)",
+        y = "Mean Sea Level (ft)", x = "Date")
+
+print(sea_level)
+
+tide_level <- ggplot(combined_sea_level_data, aes(x=Date, y=MTL..ft., group = Station))+geom_line(aes(color = Station)) +
+    labs(title = "Mean Tide Levels (2010-2022)",
+        y = "Mean Tide (ft) Level", x = "Date")
+
+print(tide_level)
+```
+
+```{r}
+
+```

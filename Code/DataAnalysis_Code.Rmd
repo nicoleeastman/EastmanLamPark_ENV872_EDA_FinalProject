@@ -1,4 +1,16 @@
 ```{r}
+#timeseries 
+
+library(tidyverse)
+library(dplyr)
+library(plyr)
+library(lubridate)
+library(stringr)
+library(readr)
+
+```
+
+```{r}
 
 ```
 

@@ -1,6 +1,6 @@
 ```{r set-up, include = FALSE}
 #Setting working directory
-setwd("~/R/EDA_Final")
+setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
 getwd()
 
 #Load Packages
@@ -75,3 +75,13 @@ Wrightsville.Water.Temp <- rbind(Wrightsville_2010_temp, Wrightsville_2011_temp,
 
 ```
 
+```{r}
+#clean-up sea level datasets
+Beaufort_SeaLevel <- Beaufort_SeaLevel %>% select(c(1,6,7)) %>% mutate(Station= "Beaufort")
+Hatteras_SeaLevel$Date <- as.Date(Hatteras_SeaLevel$Date, format = "%m/%d/%y")
+Hatteras_SeaLevel <- Hatteras_SeaLevel %>% select(c(1,6,7)) %>% mutate(Station= "Hatteras")
+Wrightsville_SeaLevel <-Wrightsville_SeaLevel %>% select(c(1,6,7)) %>% mutate(Station= "Wrightsville")
+
+combine_sealevel <- rbind (Beaufort_SeaLevel, Hatteras_SeaLevel, Wrightsville_SeaLevel)
+write.csv(combine_sealevel, 'combine_sealevel.csv')
+```
