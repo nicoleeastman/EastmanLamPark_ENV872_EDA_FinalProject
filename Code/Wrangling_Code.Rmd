@@ -1,0 +1,67 @@
+```{r set-up, include = FALSE}
+#Setting working directory
+setwd("~/R/EDA_Final")
+getwd()
+
+#Load Packages
+library(tidyverse)
+library(dplyr)
+#install.packages("plyr")
+library(plyr)
+library(lubridate)
+library(stringr)
+library(readr)
+
+#Import datasets
+beaufort_2010_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2010.csv")
+beaufort_2011_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2011.csv")
+beaufort_2012_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2012.csv")
+beaufort_2013_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2013.csv")
+beaufort_2014_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2014.csv")
+beaufort_2015_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2015.csv")
+beaufort_2016_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2016.csv")
+beaufort_2017_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2017.csv")
+beaufort_2018_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2018.csv")
+beaufort_2019_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2019.csv")
+beaufort_2020_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2020.csv")
+beaufort_2021_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2021.csv")
+
+Hatteras_2010_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2010.csv")
+Hatteras_2011_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2011.csv")
+Hatteras_2012_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2012.csv")
+Hatteras_2013_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2013.csv")
+Hatteras_2014_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2014.csv")
+Hatteras_2015_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2015.csv")
+Hatteras_2016_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2016.csv")
+Hatteras_2017_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2017.csv")
+Hatteras_2018_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2018.csv")
+Hatteras_2019_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2019.csv")
+Hatteras_2020_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2020.csv")
+Hatteras_2021_temp <- read_csv("Raw_Data/WaterTempData/Hatteras/Hatteras_2021.csv")
+
+Wrightsville_2010_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2010.csv")
+Wrightsville_2011_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2011.csv")
+Wrightsville_2012_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2012.csv")
+Wrightsville_2013_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2013.csv")
+Wrightsville_2014_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2014.csv")
+Wrightsville_2015_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2015.csv")
+Wrightsville_2016_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2016.csv")
+Wrightsville_2017_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2017.csv")
+Wrightsville_2018_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2018.csv")
+Wrightsville_2019_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2019.csv")
+Wrightsville_2020_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2020.csv")
+Wrightsville_2021_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsville_2021.csv")
+
+```
+
+#Research Question: Do climate change indicators, sea level and water temperature have a statistically significant relationship at three coastal sites in North Carolina: Beaufort, Cape Hatteras, and Wrightsville Beach?
+```{r}
+#Wrangle data to combine the water temperature data for each year into one csv for each site
+Beaufort.Water.Temp<- list.files(path= "Raw_Data/WaterTemperature/Beaufort",
+                                 pattern= "*.csv", full.names = TRUE) %>%
+  lapply(read_csv) %>%
+  bind_rows
+Beaufort.Water.Temp <- merge(beaufort_2010_temp, beaufort_2011_temp, beaufort_2012_temp)
+
+```
+
