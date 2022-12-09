@@ -13,6 +13,10 @@ library(stringr)
 library(readr)
 
 #Import datasets
+Beaufort_SeaLevel <- read_csv("Raw_Data/SeaLevelData/Beaufort_Marine_Lab_2010_2022_SeaLevelRise.csv")
+Hatteras_SeaLevel<- read_csv("Raw_Data/SeaLevelData/Hatteras_2010_2022_SeaLevelRise.csv")
+Wrightsville_SeaLevel<- read_csv("Raw_Data/SeaLevelData/WrightsvilleBeach_2010_2022_SeaLevelRise.csv")
+
 beaufort_2010_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2010.csv")
 beaufort_2011_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2011.csv")
 beaufort_2012_temp <- read_csv("Raw_Data/WaterTempData/Beaufort/beaufort_2012.csv")
@@ -57,11 +61,17 @@ Wrightsville_2021_temp <- read_csv("Raw_Data/WaterTempData/Wrightsville/Wrightsv
 #Research Question: Do climate change indicators, sea level and water temperature have a statistically significant relationship at three coastal sites in North Carolina: Beaufort, Cape Hatteras, and Wrightsville Beach?
 ```{r}
 #Wrangle data to combine the water temperature data for each year into one csv for each site
-Beaufort.Water.Temp<- list.files(path= "Raw_Data/WaterTemperature/Beaufort",
-                                 pattern= "*.csv", full.names = TRUE) %>%
-  lapply(read_csv) %>%
-  bind_rows
-Beaufort.Water.Temp <- merge(beaufort_2010_temp, beaufort_2011_temp, beaufort_2012_temp)
+Beaufort.Water.Temp <- rbind(beaufort_2010_temp, beaufort_2011_temp, beaufort_2012_temp, beaufort_2013_temp, beaufort_2014_temp, beaufort_2015_temp, beaufort_2016_temp, beaufort_2017_temp, beaufort_2018_temp, beaufort_2019_temp, beaufort_2020_temp, beaufort_2021_temp)
+
+Hatteras.Water.Temp <- rbind(Hatteras_2010_temp, Hatteras_2011_temp, Hatteras_2012_temp, Hatteras_2013_temp, Hatteras_2014_temp, Hatteras_2015_temp, Hatteras_2016_temp, Hatteras_2017_temp, Hatteras_2018_temp, Hatteras_2019_temp, Hatteras_2020_temp, Hatteras_2021_temp)
+
+Wrightsville.Water.Temp <- rbind(Wrightsville_2010_temp, Wrightsville_2011_temp, Wrightsville_2012_temp, Wrightsville_2013_temp, Wrightsville_2014_temp, Wrightsville_2015_temp, Wrightsville_2016_temp, Wrightsville_2017_temp, Wrightsville_2018_temp, Wrightsville_2019_temp, Wrightsville_2020_temp, Wrightsville_2021_temp)
+
+#Clean-up environment and remove the individual data frames for each year
+```
+
+```{r}
+#Wrangle water temperature data frames to be averaged by month
 
 ```
 
