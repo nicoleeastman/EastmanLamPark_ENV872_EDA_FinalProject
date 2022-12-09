@@ -1,0 +1,39 @@
+```{r}
+getwd()
+setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
+library(tidyverse)
+library(dplyr)
+
+header <- scan ("./Raw_Data/WaterTempData/Beaufort/beaufort_2010.csv", nlines = 1,sep=",", what =character())
+beaufort10 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2010.csv",sep = ",", header = F, skip=2)
+beaufort11 = read.csv( "./Raw_Data/WaterTempData/Beaufort/beaufort_2011.csv",sep = ",", header = F, skip=2)
+beaufort12 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2012.csv",sep = ",", header = F, skip=2)
+beaufort13 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2013.csv",sep = ",", header = F, skip=2)
+beaufort14 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2014.csv",sep = ",", header = F, skip=2) 
+beaufort15 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2015.csv",sep = ",", header = F, skip=2)
+beaufort16 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2016.csv",sep = ",", header = F, skip=2)
+beaufort17 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2017.csv",sep = ",", header = F, skip=2)
+beaufort18 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2018.csv",sep = ",", header = F, skip=2)
+beaufort19 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2019.csv",sep = ",", header = F, skip=2)
+beaufort20 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2020.csv",sep = ",", header = F, skip=2)
+beaufort21 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2021.csv",sep = ",", header = F, skip=2)
+
+beaufort <-rbind(beaufort10,beaufort11,beaufort12,beaufort13,beaufort14,beaufort15, beaufort16, beaufort17, beaufort18, beaufort19, beaufort20,beaufort21)
+names (beaufort) <- header
+```
+
+```{r}
+
+beaufort_wtmp <- beaufort %>% 
+  select("#YY","MM","DD","WTMP") %>% 
+  rename (Year = "#YY", Month = "MM", Day ="DD")
+
+beaufort_daily_wtmp <-  beaufort_wtmp %>% 
+  group_by( Year, Month, Day) %>% 
+  summarise(dailywtmp = mean(WTMP),.groups ='drop')
+
+beaufort_monthly_wtmp <- beaufort_wtmp %>% 
+  group_by(Year, Month) %>% 
+  summarise( monthlywtmp = mean(WTMP), .groups ='drop')
+```
+
