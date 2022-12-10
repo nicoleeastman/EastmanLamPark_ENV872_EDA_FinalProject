@@ -68,25 +68,25 @@ Wrightsville21 = read.csv("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_20
 ```{r}
 #Wrangle data to combine the water temperature data for each year into one csv for each site
 Beaufort.Water.Temp <-rbind(beaufort10,beaufort11,beaufort12,beaufort13,beaufort14,beaufort15, beaufort16, beaufort17, beaufort18, beaufort19, beaufort20,beaufort21)
-names (beaufort) <- header
+names (Beaufort.Water.Temp) <- header
 
 Hatteras.Water.Temp <-rbind(Hatteras10,Hatteras11,Hatteras12,Hatteras13,Hatteras14,Hatteras15, Hatteras16, Hatteras17, Hatteras18, Hatteras19, Hatteras20,Hatteras21)
-names (Hatteras) <- header
+names (Hatteras.Water.Temp) <- header
 
 Wrightsville.Water.Temp <-rbind(Wrightsville10,Wrightsville11,Wrightsville12,Wrightsville13,Wrightsville14,Wrightsville15, Wrightsville16, Wrightsville17, Wrightsville18, Wrightsville19, Wrightsville20,Wrightsville21)
-names (Wrightsville) <- header
+names (Wrightsville.Water.Temp) <- header
 
 #Clean-up environment and remove the individual data frames for each year
 ```
 
 ```{r}
 #Wrangle Beaufort water temperature data frames to be averaged by month
-beaufort_wtmp <- beaufort %>% 
+beaufort_wtmp <- Beaufort.Water.Temp %>% 
   select("#YY","MM","DD","WTMP") %>% 
-  dplyr::rename (Year = "#YY", Month = "MM", Day ="DD")
+  dplyr::rename(Year = "#YY", Month = "MM", Day ="DD")
 
 beaufort_daily_wtmp <-  beaufort_wtmp %>% 
-  group_by( Year, Month, Day) %>% 
+  group_by(Year, Month, Day) %>% 
   summarise(dailywtmp = mean(WTMP),.groups ='drop')
 
 beaufort_monthly_wtmp <- beaufort_wtmp %>% 
@@ -94,9 +94,9 @@ beaufort_monthly_wtmp <- beaufort_wtmp %>%
   summarise( monthlywtmp = mean(WTMP), .groups ='drop')
 
 #Wrangle Hatteras water temperature dataframe to be averaged by month
-Hatteras_wtmp <- Hatteras %>% 
+Hatteras_wtmp <- Hatteras.Water.Temp %>% 
   select("#YY","MM","DD","WTMP") %>% 
-  rename (Year = "#YY", Month = "MM", Day ="DD")
+  dplyr::rename (Year = "#YY", Month = "MM", Day ="DD")
 
 Hatteras_daily_wtmp <-  Hatteras_wtmp %>% 
   group_by( Year, Month, Day) %>% 
@@ -107,9 +107,9 @@ Hatteras_monthly_wtmp <- Hatteras_wtmp %>%
   summarise( monthlywtmp = mean(WTMP), .groups ='drop')
 
 #Wrangle Wrightsville water temperature data frame to be averaged by month
-Wrightsville_wtmp <- Wrightsville %>% 
+Wrightsville_wtmp <- Wrightsville.Water.Temp %>% 
   select("#YY","MM","DD","WTMP") %>% 
-  rename (Year = "#YY", Month = "MM", Day ="DD")
+  dplyr::rename (Year = "#YY", Month = "MM", Day ="DD")
 
 Wrightsville_daily_wtmp <-  Wrightsville_wtmp %>% 
   group_by( Year, Month, Day) %>% 
@@ -130,4 +130,7 @@ Wrightsville_SeaLevel <-Wrightsville_SeaLevel %>% select(c(1,6,7)) %>% mutate(St
 
 combine_sealevel <- rbind (Beaufort_SeaLevel, Hatteras_SeaLevel, Wrightsville_SeaLevel)
 write.csv(combine_sealevel, 'combine_sealevel.csv')
+
+#clean-up water temperature data frames
+
 ```

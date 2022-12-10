@@ -1,32 +1,64 @@
 ```{r}
+#Set working directory and load in libraries
+setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
+
 library(tidyverse)
 library(dplyr)
 library(plyr)
 library(lubridate)
 library(stringr)
 library(readr)
-
+library(ggplot2)
+install.packages("gridExtra")
+library(gridExtra)
 ```
 
 ```{r}
-setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
+#Import data
 combined_sea_level_data <- read.csv("Code/combine_sealevel.csv")
-mytheme<- theme()
+#Add month-year column from date
+combined_sea_level_data$Date<- as.Date(combined_sea_level_data$Date)
+
+combined_sea_level_data %>%
+  
+mytheme <- theme_classic(base_size = 14) +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "top")
+theme_set(mytheme)
 ```
 
 ```{r}
-#Exploring Tide Level Measurements
-sea_level <- ggplot(combined_sea_level_data, aes(x=Date, y=MSL..ft., group = Station))+geom_line(aes(color = Station)) +
+#Exploring sea level measurements over the 12 years
+
+sea_level_plot <- ggplot(combined_sea_level_data, aes(x=Date, y=MSL..ft., group = Station))+geom_line(aes(color = Station)) + geom_smooth(method= "lm", se=FALSE) +
     labs(title = "Mean Sea Levels (2010-2022)",
-        y = "Mean Sea Level (ft)", x = "Date") +
-  
-print(sea_level)
+        y = "Mean Sea Level (ft)", x = "Date (Month-Year)") + 
+  scale_x_date(date_breaks="18 months", date_labels ="%b-%y")
+print(sea_level_plot)
 
 tide_level <- ggplot(combined_sea_level_data, aes(x=Date, y=MTL..ft., group = Station))+geom_line(aes(color = Station)) +
     labs(title = "Mean Tide Levels (2010-2022)",
         y = "Mean Tide (ft) Level", x = "Date")
-
 print(tide_level)
+
+
+
+#Sea Level Measurements for 2011 and 2021
+
+sea_level_2011 <- ggplot(combined_sea_level_data, aes(x=Date, y=MSL..ft., group = Station))+geom_line(aes(color = Station)) + geom_smooth(method= "lm", se=FALSE) +
+    labs(title = "Mean Sea Levels (2011)",
+        y = "Mean Sea Level (ft)", x = "Date (Month-Year)") +
+  scale_x_date(limits= as.Date(c("2011-01-01", "2011-12-01")), date_breaks="2 months", date_labels ="%b-%y")
+print(sea_level_2011)
+
+sea_level_2021 <- ggplot(combined_sea_level_data, aes(x=Date, y=MSL..ft., group = Station))+geom_line(aes(color = Station)) + geom_smooth(method= "lm", se=FALSE) +
+    labs(title = "Mean Sea Levels (2011)",
+        y = "Mean Sea Level (ft)", x = "Date (Month-Year)") +
+  scale_x_date(limits= as.Date(c("2021-01-01", "2021-12-01")), date_breaks="2 months", date_labels ="%b-%y")
+print(sea_level_2021)
+
+combined_2011_2021<- grid.arrange(sea_level_2011, sea_level_2021, ncol= 2, common.ledgend= TRUE)
+print(combined_2011_2021)
 ```
 
 ```{r}
