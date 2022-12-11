@@ -8,9 +8,56 @@ library(lubridate)
 library(stringr)
 library(readr)
 
+
 ```
 
 ```{r}
+#Import data
+getwd()
+setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
+combined_sea_level_data <- read.csv("./Code/combine_sealevel.csv")
+#Add month-year column from date
+combined_sea_level_data$Date<- as.Date(combined_sea_level_data$Date)
+```
 
+```{r}
+#Beaufort Time Series
+Beaufort <- combined_sea_level_data %>% filter(Station == "Beaufort")
+
+Beaufort.monthly.ts <- ts(Beaufort$MSL..ft.,
+    start = c(2010, 1), frequency = 12)
+
+
+Beaufort_Monthly_Sea_Level <- stl(Beaufort.monthly.ts,
+    s.window = "periodic")
+
+plot(Beaufort_Monthly_Sea_Level)
+
+```
+
+```{r}
+#Hatteras Time Series
+Hatteras <- combined_sea_level_data %>% filter(Station == "Hatteras")
+
+Hatteras.monthly.ts <- ts(Hatteras$MSL..ft.,
+    start = c(2010, 1), frequency = 12)
+
+Hatteras_Monthly_Sea_Level <- stl(Hatteras.monthly.ts,
+    s.window = "periodic")
+
+plot(Hatteras_Monthly_Sea_Level)
+```
+
+```{r}
+#Wrightsville Time Series
+Wrightsville <- combined_sea_level_data %>% filter(Station == "Wrightsville")
+
+Wrightsville.monthly.ts <- ts(Wrightsville$MSL..ft.,
+    start = c(2010, 1), frequency = 12)
+
+Wrightsville_Monthly_Sea_Level <- stl(Wrightsville.monthly.ts,
+    s.window = "periodic")
+
+plot(Wrightsville_Monthly_Sea_Level)
 ```
 
