@@ -33,6 +33,9 @@ Beaufort_Monthly_Sea_Level <- stl(Beaufort.monthly.ts,
 
 plot(Beaufort_Monthly_Sea_Level)
 
+Beaufort_monthly_sea_level_monotonic_trend_analysis <- Kendall::SeasonalMannKendall(Beaufort.monthly.ts)
+summary(Beaufort_monthly_sea_level_monotonic_trend_analysis)
+
 ```
 
 ```{r}
@@ -46,6 +49,10 @@ Hatteras_Monthly_Sea_Level <- stl(Hatteras.monthly.ts,
     s.window = "periodic")
 
 plot(Hatteras_Monthly_Sea_Level)
+
+Hatteras_monthly_sea_level_monotonic_trend_analysis <- Kendall::SeasonalMannKendall(Hatteras.monthly.ts)
+summary(Hatteras_monthly_sea_level_monotonic_trend_analysis)
+
 ```
 
 ```{r}
@@ -59,5 +66,9 @@ Wrightsville_Monthly_Sea_Level <- stl(Wrightsville.monthly.ts,
     s.window = "periodic")
 
 plot(Wrightsville_Monthly_Sea_Level)
+
+Wrightsville_monthly_sea_level_monotonic_trend_analysis <- Kendall::SeasonalMannKendall(Wrightsville.monthly.ts)
+
+summary(Wrightsville_monthly_sea_level_monotonic_trend_analysis)
 ```
 
