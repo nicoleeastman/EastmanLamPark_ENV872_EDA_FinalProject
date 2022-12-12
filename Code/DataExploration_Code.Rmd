@@ -16,7 +16,7 @@ library(gridExtra)
 
 ```{r}
 #Import data
-combined_sea_level_data <- read.csv("Code/combine_sealevel.csv")
+combined_sea_level_data <- read.csv("Processed_Data/combine_sealevel.csv")
 #Add month-year column from date
 combined_sea_level_data$Date<- as.Date(combined_sea_level_data$Date)
 
@@ -64,5 +64,6 @@ print(combined_2011_2021)
 
 ```{r}
 #Exploring Trends in Water Temperature
+
 ```
 
