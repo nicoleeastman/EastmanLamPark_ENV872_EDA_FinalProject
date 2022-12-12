@@ -1,6 +1,6 @@
 ```{r}
 getwd()
-setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
+#setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
 library(tidyverse)
 library(dplyr)
 
@@ -30,7 +30,9 @@ names (beaufort) <- header
 library(zoo)
 beaufort <- beaufort %>% 
   mutate (WTMP=ifelse(WTMP ==999,NA,WTMP)) %>% 
-  mutate(WTMP =na.locf(WTMP), fromLast =T)
+  #mutate(WTMP =na.locf(WTMP), fromLast =T)
+  mutate(WTMP = zoo::na.approx(WTMP))
+
 
 beaufort_wtmp <- beaufort %>% 
   select("#YY","MM","DD","WTMP") %>% 
@@ -48,9 +50,12 @@ beaufort_monthly_wtmp <- beaufort_wtmp %>%
 ```{r}
 #exporting data into csv
 
-write.csv(beaufort_daily_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Beaufort_daily_wtmp.csv",row.names =FALSE)
+#write.csv(beaufort_daily_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Beaufort_daily_wtmp.csv",row.names =FALSE)
+write.csv(beaufort_daily_wtmp, 'daily_beaufort_wtmp.csv')
 
-write.csv(beaufort_monthly_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Beaufort_monthly_wtmp.csv",row.names =FALSE)
+#write.csv(beaufort_monthly_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Beaufort_monthly_wtmp.csv",row.names =FALSE)
+write.csv(beaufort_monthly_wtmp, 'monthly_beaufort_wtmp.csv')
+
 
 ```
 

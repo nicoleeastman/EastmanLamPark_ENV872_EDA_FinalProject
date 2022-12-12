@@ -31,8 +31,8 @@ names (Wrightsville) <- header
 library(zoo)
 Wrightsville <- Wrightsville %>% 
   mutate (WTMP=ifelse(WTMP ==999,NA,WTMP)) %>% 
-  mutate(WTMP =na.locf(WTMP), fromLast =T)
-
+  #mutate(WTMP =na.locf(WTMP), fromLast =T)
+  mutate(WTMP = zoo::na.approx(WTMP))
 Wrightsville_wtmp <- Wrightsville %>% 
   select("#YY","MM","DD","WTMP") %>% 
   dplyr::rename (Year = "#YY", Month = "MM", Day ="DD")
@@ -48,8 +48,12 @@ Wrightsville_monthly_wtmp <- Wrightsville_wtmp %>%
 
 ```{r}
 
-write.csv(Wrightsville_daily_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Wrightsville_daily_wtmp.csv",row.names =FALSE)
+#write.csv(Wrightsville_daily_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Wrightsville_daily_wtmp.csv",row.names =FALSE)
+write.csv(Wrightsville_daily_wtmp, 'daily_Wrightsville_wtmp.csv')
 
-write.csv(Wrightsville_monthly_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Wrightsville_monthly_wtmp.csv",row.names =FALSE)
+
+#write.csv(Wrightsville_monthly_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Wrightsville_monthly_wtmp.csv",row.names =FALSE)
+write.csv(Wrightsville_daily_wtmp, 'monthly_Wrightsville_wtmp.csv')
+
 ```
 

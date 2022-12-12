@@ -65,5 +65,10 @@ print(combined_2011_2021)
 
 ```{r}
 #Exploring Trends in Water Temperature
+
+combined_daily_temp_data <- read.csv("combine_daily_wtmp.csv")
+
+combined_monthly_temp_data <- read.csv("combine_monthly_wtmp.csv")
+
 ```
 

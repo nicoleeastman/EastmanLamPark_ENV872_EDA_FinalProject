@@ -29,7 +29,8 @@ names (Hatteras) <- header
 library(zoo)
 Hatteras <- Hatteras %>% 
   mutate (WTMP=ifelse(WTMP ==999,NA,WTMP)) %>% 
-  mutate(WTMP =na.locf(WTMP), fromLast =T)
+  mutate(WTMP = zoo::na.approx(WTMP))
+  ##mutate(WTMP =na.locf(WTMP), fromLast =T)
 
 Hatteras_wtmp <- Hatteras %>% 
   select("#YY","MM","DD","WTMP") %>% 
@@ -47,8 +48,11 @@ Hatteras_monthly_wtmp <- Hatteras_wtmp %>%
 ```{r}
 #exporting data into csv
 
-write.csv(Hatteras_daily_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Hatteras_daily_wtmp.csv",row.names =FALSE)
+#write.csv(Hatteras_daily_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Hatteras_daily_wtmp.csv",row.names =FALSE)
+getwd()
+write.csv(Hatteras_daily_wtmp, 'daily_hatteras_wtmp.csv')
 
-write.csv(Hatteras_monthly_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Hatteras_monthly_wtmp.csv",row.names =FALSE)
+#write.csv(Hatteras_monthly_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Processed_Data/Hatteras_monthly_wtmp.csv",row.names =FALSE)
+write.csv(Hatteras_daily_wtmp, 'monthly_hatteras_wtmp.csv')
 
 ```

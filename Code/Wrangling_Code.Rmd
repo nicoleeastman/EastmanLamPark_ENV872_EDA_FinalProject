@@ -3,7 +3,7 @@
 #setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
 getwd()
 
-setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
+#setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
 
 
 #Load Packages
@@ -109,6 +109,8 @@ Hatteras_monthly_wtmp <- Hatteras_wtmp %>%
   group_by(Year, Month) %>% 
   summarise( monthlywtmp = mean(WTMP), .groups ='drop')
 
+
+
 #Wrangle Wrightsville water temperature data frame to be averaged by month
 Wrightsville_wtmp <- Wrightsville.Water.Temp %>% 
   select("#YY","MM","DD","WTMP") %>% 
@@ -122,6 +124,18 @@ Wrightsville_monthly_wtmp <- Wrightsville_wtmp %>%
   group_by(Year, Month) %>% 
   summarise( monthlywtmp = mean(WTMP), .groups ='drop')
 
+#combine daily datasets for water temperature 
+
+combine_daily_water_temp <- rbind (beaufort_daily_wtmp, Hatteras_daily_wtmp, Wrightsville_daily_wtmp)
+write.csv(combine_daily_water_temp, 'combine_daily_water_temp.csv')
+
+#combine daily datasets for water temperature 
+
+combine_monthly_water_temp <- rbind (beaufort_monthly_wtmp, Hatteras_monthly_wtmp, Wrightsville_monthly_wtmp)
+write.csv(combine_monthly_water_temp, 'combine_monthly_water_temp.csv')
+
+
+
 ```
 
 ```{r}
@@ -134,6 +148,27 @@ Wrightsville_SeaLevel <-Wrightsville_SeaLevel %>% select(c(1,6,7)) %>% mutate(St
 combine_sealevel <- rbind (Beaufort_SeaLevel, Hatteras_SeaLevel, Wrightsville_SeaLevel)
 write.csv(combine_sealevel, 'combine_sealevel.csv')
 
-#clean-up water temperature data frames
+
+```
+
+```{r}
+#combine and clean sea level temp datasets
+getwd()
+daily_hatteras_wtmp <- read.csv("daily_hatteras_wtmp.csv")
+monthly_hatteras_wtmp <- read.csv("monthly_hatteras_wtmp.csv")
+
+daily_beaufort_wtmp <- read.csv("daily_hatteras_wtmp.csv")
+monthly_beaufort_wtmp <- read.csv("monthly_hatteras_wtmp.csv")
+
+daily_Wrightsville_wtmp <- read.csv("daily_hatteras_wtmp.csv")
+monthly_Wrightsville_wtmp <- read.csv("monthly_Wrightsville_wtmp.csv")
+
+
+combine_daily_wtmp <- rbind (daily_hatteras_wtmp, daily_beaufort_wtmp, daily_Wrightsville_wtmp)
+write.csv(combine_daily_wtmp, 'combine_daily_wtmp.csv')
+
+
+combine_monthly_wtmp <- rbind (monthly_hatteras_wtmp, monthly_beaufort_wtmp, monthly_Wrightsville_wtmp)
+write.csv(combine_monthly_wtmp, 'combine_monthly_wtmp.csv')
 
 ```
