@@ -1,0 +1,52 @@
+```{r}
+library(tidyverse)
+library(dplyr)
+
+getwd()
+setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
+
+beaufort_monthly_wtmp = read.csv( "./Processed_Data/Beaufort_monthly_wtmp.csv",stringsAsFactors = F)
+hatteras_monthly_wtmp = read.csv( "./Processed_Data/Hatteras_monthly_wtmp.csv",stringsAsFactors = F)
+wrightsville_monthly_wtmp = read.csv( "./Processed_Data/Wrightsville_monthly_wtmp.csv",stringsAsFactors = F)
+
+sites <- list(beaufort_monthly_wtmp,hatteras_monthly_wtmp,wrightsville_monthly_wtmp)
+
+sites %>%  reduce(left_join, by = c ("Year", "Month"))
+
+combined_monthly_wtmp<-as.data.frame (sites)
+
+combined_monthly_wtmp <-combined_monthly_wtmp %>% 
+  dplyr::rename (Beaufort = monthlywtmp, Hatteras = monthlywtmp.1, Wrightsville = monthlywtmp.2) %>% 
+  select(Year,Month,Beaufort,Hatteras, Wrightsville)
+
+
+write.csv(combined_monthly_wtmp, file= "C:/Users/hyjgp/Documents/EastmanLamPark_ENV872_EDA_FinalProject/Code/Combined_monthly_wtmp.csv",row.names =FALSE)
+```
+
+
+```{r}
+
+#### NOT DONE -- different num rows-- i dont know why. i'll look into it tomrw
+
+
+library(lubridate)
+
+beaufort_daily_wtmp = read.csv( "./Processed_Data/Beaufort_daily_wtmp.csv",stringsAsFactors = F)
+hatteras_daily_wtmp = read.csv( "./Processed_Data/Hatteras_daily_wtmp.csv",stringsAsFactors = F)
+wrightsville_daily_wtmp = read.csv( "./Processed_Data/Wrightsville_daily_wtmp.csv",stringsAsFactors = F)
+
+beaufort_daily_wtmp %>%  mutate("Date" = make_date(year= Year, month =Month, day = Day))
+hatteras_daily_wtmp %>%  mutate(Date = make_date(year= Year, month =Month, day = Day))
+
+sites <- list(beaufort_daily_wtmp,hatteras_daily_wtmp,wrightsville_daily_wtmp)
+
+
+sites %>%  reduce(left_join, by = c ("Year", "Month"))
+
+combined_daily_wtmp<-as.data.frame (sites)
+
+combined_daily_wtmp <-combined_daily_wtmp %>% 
+  dplyr::rename (Beaufort = dailywtmp, Hatteras = dailywtmp.1, Wrightsville = dailywtmp.2) %>% 
+  select(Year,Month,Beaufort,Hatteras, Wrightsville)
+```
+

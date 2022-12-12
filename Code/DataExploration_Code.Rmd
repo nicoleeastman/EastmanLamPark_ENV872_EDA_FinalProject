@@ -1,6 +1,8 @@
 ```{r}
 #Set working directory and load in libraries
-setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
+#setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
+
+setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
 
 library(tidyverse)
 library(dplyr)
@@ -19,8 +21,8 @@ combined_sea_level_data <- read.csv("Code/combine_sealevel.csv")
 #Add month-year column from date
 combined_sea_level_data$Date<- as.Date(combined_sea_level_data$Date)
 
-combined_sea_level_data %>%
-  
+#combined_sea_level_data %>%
+
 mytheme <- theme_classic(base_size = 14) +
   theme(axis.text = element_text(color = "black"), 
         legend.position = "top")
