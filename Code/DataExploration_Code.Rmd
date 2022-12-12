@@ -17,7 +17,7 @@ library(gridExtra)
 
 ```{r}
 #Import data
-combined_sea_level_data <- read.csv("Code/combine_sealevel.csv")
+combined_sea_level_data <- read.csv("combine_sealevel.csv")
 #Add month-year column from date
 combined_sea_level_data$Date<- as.Date(combined_sea_level_data$Date)
 
@@ -66,13 +66,24 @@ print(combined_2011_2021)
 ```{r}
 #Exploring Trends in Water Temperature
 
-combined_daily_temp_data <- read.csv("combine_daily_wtmp.csv")
-daily_wtmp_level_plot <- ggplot(combined_daily_temp_data, aes(x=Year, y=dailywtmp, group = Station))+geom_line(aes(color = Station)) + 
-    labs(title = "Daily Water Temperature (2010-2022)",
-        y = "Daily Water Temperature (ft)", x = "Date (Month-Year)") 
+combined_daily_wtmp_data <- read.csv("combine_daily_water_temp.csv") 
+combined_daily_wtmp_data$Date <- as.Date(combined_daily_wtmp_data$Date, format = "%Y-%m-%d")
+daily_wtmp_level_plot <- ggplot (combined_daily_wtmp_data, aes(x= Date, y=dailywtmp, group = Station))+ geom_line(aes(color = Station)) + 
+    labs(title = "Daily Water Temperature (2011-2022)",
+        y = "Daily Water Temperature (Celcius)", x = "Date") +
+  scale_x_date( date_breaks="6 months", date_labels ="%Y-%m")+
+  theme(axis.text.x = element_text(angle = 60,hjust=1))
+  
 print(daily_wtmp_level_plot)
 
-combined_monthly_temp_data <- read.csv("combine_monthly_wtmp.csv")
+combined_monthly_wtmp_data <- read.csv("combine_monthly_water_temp.csv")
+combined_monthly_wtmp_data$Date <- as.Date(combined_monthly_wtmp_data$Date, format = "%Y-%m-%d")
+monthly_wtmp_level_plot <- ggplot (combined_monthly_wtmp_data, aes(x=Date, y=monthlywtmp, group = Station))+geom_line(aes(color = Station)) + 
+    labs(title = "Monthly Water Temperature (2011-2022)",
+        y = "Monthly Water Temperature (Celcius)", x = "Date") +
+  scale_x_date( date_breaks="6 months", date_labels ="%Y-%m")+
+  theme(axis.text.x = element_text(angle = 60,hjust=1))
+print(monthly_wtmp_level_plot)
 
 ```
 
