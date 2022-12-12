@@ -67,6 +67,10 @@ print(combined_2011_2021)
 #Exploring Trends in Water Temperature
 
 combined_daily_temp_data <- read.csv("combine_daily_wtmp.csv")
+daily_wtmp_level_plot <- ggplot(combined_daily_temp_data, aes(x=Year, y=dailywtmp, group = Station))+geom_line(aes(color = Station)) + 
+    labs(title = "Daily Water Temperature (2010-2022)",
+        y = "Daily Water Temperature (ft)", x = "Date (Month-Year)") 
+print(daily_wtmp_level_plot)
 
 combined_monthly_temp_data <- read.csv("combine_monthly_wtmp.csv")
 

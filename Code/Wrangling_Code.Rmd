@@ -154,17 +154,23 @@ write.csv(combine_sealevel, 'combine_sealevel.csv')
 ```{r}
 #combine and clean sea level temp datasets
 getwd()
-daily_hatteras_wtmp <- read.csv("daily_hatteras_wtmp.csv")
-monthly_hatteras_wtmp <- read.csv("monthly_hatteras_wtmp.csv")
+daily_hatteras_wtmp <- read.csv("daily_hatteras_wtmp.csv") %>% 
+  mutate(Station= "Hatteras")
+monthly_hatteras_wtmp <- read.csv("monthly_hatteras_wtmp.csv") %>%
+  mutate(Station= "Hatteras")
+daily_beaufort_wtmp <- read.csv("daily_hatteras_wtmp.csv") %>%
+  mutate(Station= "Beaufort")
+monthly_beaufort_wtmp <- read.csv("monthly_hatteras_wtmp.csv") %>% 
+  mutate(Station= "Beaufort")
 
-daily_beaufort_wtmp <- read.csv("daily_hatteras_wtmp.csv")
-monthly_beaufort_wtmp <- read.csv("monthly_hatteras_wtmp.csv")
+daily_Wrightsville_wtmp <- read.csv("daily_hatteras_wtmp.csv") %>% 
+  mutate(Station= "Wrightsville")
+monthly_Wrightsville_wtmp <- read.csv("monthly_Wrightsville_wtmp.csv") %>% 
+  mutate(Station= "Wrightsville")
 
-daily_Wrightsville_wtmp <- read.csv("daily_hatteras_wtmp.csv")
-monthly_Wrightsville_wtmp <- read.csv("monthly_Wrightsville_wtmp.csv")
 
+combine_daily_wtmp <- rbind (daily_hatteras_wtmp, daily_beaufort_wtmp, daily_Wrightsville_wtmp) 
 
-combine_daily_wtmp <- rbind (daily_hatteras_wtmp, daily_beaufort_wtmp, daily_Wrightsville_wtmp)
 write.csv(combine_daily_wtmp, 'combine_daily_wtmp.csv')
 
 
