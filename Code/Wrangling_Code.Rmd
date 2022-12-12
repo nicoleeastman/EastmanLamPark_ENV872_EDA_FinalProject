@@ -152,7 +152,7 @@ Wrightsville_monthly_wtmp <- Wrightsville_wtmp %>%
 combine_daily_water_temp <- rbind (beaufort_daily_wtmp, Hatteras_daily_wtmp, Wrightsville_daily_wtmp)
 write.csv(combine_daily_water_temp, 'combine_daily_water_temp.csv')
 
-#combine daily datasets for water temperature 
+#combine monthly datasets for water temperature 
 
 combine_monthly_water_temp <- rbind (beaufort_monthly_wtmp, Hatteras_monthly_wtmp, Wrightsville_monthly_wtmp)
 write.csv(combine_monthly_water_temp, 'combine_monthly_water_temp.csv')
