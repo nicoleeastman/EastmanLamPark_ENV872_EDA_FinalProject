@@ -64,6 +64,8 @@ print(combined_2011_2021)
 
 ```{r}
 #Exploring Trends in Water Temperature
+
+#Daily Water Temperature Measurements for 2011-2022
 combined_daily_wtmp_data <- read.csv("combine_daily_water_temp.csv")
 combined_daily_wtmp_data$Date<-as.Date(combined_daily_wtmp_data$Date, format = "%Y-%m-%d")
 daily_wtmp_level_plot <-ggplot(combined_daily_wtmp_data, aes(x =Date, y=dailywtmp,group= Station))+
@@ -73,6 +75,7 @@ daily_wtmp_level_plot <-ggplot(combined_daily_wtmp_data, aes(x =Date, y=dailywtm
   theme(axis.text.x = element_text(angle=60, hjust=1))
 print(daily_wtmp_level_plot)
 
+#Monthly Water Temperature Measurements for 2011-2022
 combined_monthly_wtmp_data <- read.csv("combine_monthly_water_temp.csv")
 combined_monthly_wtmp_data$Date<-as.Date(combined_monthly_wtmp_data$Date, format = "%Y-%m-%d")
 monthly_wtmp_level_plot <-ggplot(combined_monthly_wtmp_data, aes(x =Date, y=monthlywtmp,group= Station))+

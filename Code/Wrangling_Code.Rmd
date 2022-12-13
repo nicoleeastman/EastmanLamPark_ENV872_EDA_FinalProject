@@ -100,32 +100,29 @@ Wrightsville.Water.Temp <- Wrightsville.Water.Temp %>%
 
 beaufort_wtmp <- Beaufort.Water.Temp %>% 
   select("#YY","MM","DD","WTMP") %>% 
-  dplyr::rename(Year = "#YY", Month = "MM", Day ="DD") %>% 
-  mutate("Date" = make_date(year= Year, month =Month, day = Day))
+  dplyr::rename(Year = "#YY", Month = "MM", Day ="DD") %>%  mutate("Date" = make_date(year= Year, month =Month, day = Day))
 
 beaufort_daily_wtmp <-  beaufort_wtmp %>% 
-  dplyr::group_by(Date) %>% 
+  dplyr::group_by(Year, Month, Day, Date) %>% 
   dplyr::summarise(dailywtmp = mean(WTMP),.groups ='drop') %>% 
   mutate(Station = "Beaufort")
 
 beaufort_monthly_wtmp <- beaufort_wtmp %>% 
-  dplyr::group_by(Date) %>% 
+  dplyr::group_by(Year, Month) %>% 
   dplyr::summarise( monthlywtmp = mean(WTMP), .groups ='drop') %>% 
   mutate(Station = "Beaufort")
 
 #Wrangle Hatteras water temperature dataframe to be averaged by month
 Hatteras_wtmp <- Hatteras.Water.Temp %>% 
   select("#YY","MM","DD","WTMP") %>% 
-  dplyr::rename (Year = "#YY", Month = "MM", Day ="DD") %>% 
-  mutate("Date" = make_date(year= Year, month =Month, day = Day))
+  dplyr::rename (Year = "#YY", Month = "MM", Day ="DD")  %>% mutate("Date" = make_date(year= Year, month =Month, day = Day))
 
 Hatteras_daily_wtmp <-  Hatteras_wtmp %>% 
-  dplyr::group_by( Date) %>% 
-  dplyr::summarise(dailywtmp = mean(WTMP),.groups ='drop') %>% 
-    mutate(Station = "Hatteras")
+  dplyr::group_by(Year, Month, Day, Date) %>% 
+  dplyr::summarise(dailywtmp = mean(WTMP),.groups ='drop') %>% mutate(Station = "Hatteras")
 
 Hatteras_monthly_wtmp <- Hatteras_wtmp %>% 
-  dplyr::group_by(Date) %>% 
+  dplyr::group_by(Year, Month) %>% 
   dplyr::summarise( monthlywtmp = mean(WTMP), .groups ='drop') %>% 
   mutate(Station = "Hatteras")
 
@@ -138,12 +135,12 @@ Wrightsville_wtmp <- Wrightsville.Water.Temp %>%
   mutate("Date" = make_date(year= Year, month =Month, day = Day))
 
 Wrightsville_daily_wtmp <-  Wrightsville_wtmp %>% 
-  dplyr::group_by( Date) %>% 
+  dplyr::group_by(Year, Month, Day, Date) %>% 
   dplyr::summarise(dailywtmp = mean(WTMP),.groups ='drop') %>% 
   mutate(Station = "Wrightsville")
 
 Wrightsville_monthly_wtmp <- Wrightsville_wtmp %>% 
-  dplyr::group_by(Date) %>% 
+  dplyr::group_by(Year, Month) %>% 
   dplyr::summarise( monthlywtmp = mean(WTMP), .groups ='drop') %>% 
   mutate(Station = "Wrightsville")
 
@@ -156,7 +153,6 @@ write.csv(combine_daily_water_temp, 'combine_daily_water_temp.csv')
 
 combine_monthly_water_temp <- rbind (beaufort_monthly_wtmp, Hatteras_monthly_wtmp, Wrightsville_monthly_wtmp)
 write.csv(combine_monthly_water_temp, 'combine_monthly_water_temp.csv')
-
 
 ```
 
