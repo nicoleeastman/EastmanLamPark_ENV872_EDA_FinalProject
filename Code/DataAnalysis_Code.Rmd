@@ -21,6 +21,7 @@ getwd()
 combined_sea_level_data <- read.csv("./Processed_Data/combine_sealevel.csv")
 #Add month-year column from date
 combined_sea_level_data$Date<- as.Date(combined_sea_level_data$Date)
+combined_sea_level_data <- combined_sea_level_data %>% mutate(Month=month(Date)) %>% mutate(Year=year(Date)) %>% group_by(Year, Month) 
 
 combined_water_temp_data<- read.csv("./Processed_Data/combine_monthly_water_temp.csv")
 combined_water_temp_data$Date <-as.yearmon(paste(combined_water_temp_data$Year, combined_water_temp_data$Month, sep="-"), "%Y-%m")
