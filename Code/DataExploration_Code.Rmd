@@ -1,6 +1,6 @@
 ```{r}
 #Set working directory and load in libraries
-#setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
+#setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
 getwd()
 
 library(tidyverse)
@@ -16,11 +16,9 @@ library(gridExtra)
 
 ```{r}
 #Import data
-combined_sea_level_data <- read.csv("Processed_Data/combine_sealevel.csv")
+combined_sea_level_data <- read.csv("./Data/Processed_Data/combine_sealevel.csv")
 #Add month-year column from date
 combined_sea_level_data$Date<- as.Date(combined_sea_level_data$Date)
-
-combined_sea_level_data %>%
   
 mytheme <- theme_classic(base_size = 14) +
   theme(axis.text = element_text(color = "black"), 
@@ -28,7 +26,7 @@ mytheme <- theme_classic(base_size = 14) +
 theme_set(mytheme)
 ```
 
-```{r}
+```{r, fig.cap="Sea Level Trend Exploration", fig.align='left', fig.height= 2.5}
 #Exploring sea level measurements over the 12 years
 
 sea_level_plot <- ggplot(combined_sea_level_data, aes(x=Date, y=MSL..ft., group = Station))+geom_line(aes(color = Station)) + geom_smooth(method= "lm", se=FALSE) +
@@ -62,11 +60,11 @@ combined_2011_2021<- grid.arrange(sea_level_2011, sea_level_2021, ncol= 2, commo
 print(combined_2011_2021)
 ```
 
-```{r}
+```{r, fig.cap="Water Temperature Trend Exploration", fig.align='left', fig.height= 2.5}
 #Exploring Trends in Water Temperature
 
 #Daily Water Temperature Measurements for 2011-2022
-combined_daily_wtmp_data <- read.csv("combine_daily_water_temp.csv")
+combined_daily_wtmp_data <- read.csv("./Data/Processed_Data/combine_daily_water_temp.csv")
 combined_daily_wtmp_data$Date<-as.Date(combined_daily_wtmp_data$Date, format = "%Y-%m-%d")
 daily_wtmp_level_plot <-ggplot(combined_daily_wtmp_data, aes(x =Date, y=dailywtmp,group= Station))+
   geom_line(aes(color=Station))+
@@ -76,7 +74,7 @@ daily_wtmp_level_plot <-ggplot(combined_daily_wtmp_data, aes(x =Date, y=dailywtm
 print(daily_wtmp_level_plot)
 
 #Monthly Water Temperature Measurements for 2011-2022
-combined_monthly_wtmp_data <- read.csv("combine_monthly_water_temp.csv")
+combined_monthly_wtmp_data <- read.csv("./Data/Processed_Data/combine_monthly_water_temp.csv")
 combined_monthly_wtmp_data$Date<-as.Date(combined_monthly_wtmp_data$Date, format = "%Y-%m-%d")
 monthly_wtmp_level_plot <-ggplot(combined_monthly_wtmp_data, aes(x =Date, y=monthlywtmp,group= Station))+
   geom_line(aes(color=Station))+

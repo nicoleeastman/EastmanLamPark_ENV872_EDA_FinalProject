@@ -1,7 +1,6 @@
 
 ```{r set-up, include = FALSE}
 #Setting working directory
-#setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
 #setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
 
 getwd()
@@ -17,51 +16,51 @@ library(readr)
 library(zoo)
 
 #Import Beaufort datasets
-Beaufort_SeaLevel <- read_csv("Raw_Data/SeaLevelData/Beaufort_Marine_Lab_2010_2022_SeaLevelRise.csv")
+Beaufort_SeaLevel <- read_csv("Data/Raw_Data/SeaLevelData/Beaufort_Marine_Lab_2010_2022_SeaLevelRise.csv")
 
-header <- scan ("./Raw_Data/WaterTempData/Beaufort/beaufort_2010.csv", nlines = 1,sep=",", what =character())
-beaufort11 = read.csv( "./Raw_Data/WaterTempData/Beaufort/beaufort_2011.csv",sep = ",", header = F, skip=2)
-beaufort12 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2012.csv",sep = ",", header = F, skip=2)
-beaufort13 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2013.csv",sep = ",", header = F, skip=2)
-beaufort14 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2014.csv",sep = ",", header = F, skip=2) 
-beaufort15 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2015.csv",sep = ",", header = F, skip=2)
-beaufort16 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2016.csv",sep = ",", header = F, skip=2)
-beaufort17 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2017.csv",sep = ",", header = F, skip=2)
-beaufort18 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2018.csv",sep = ",", header = F, skip=2)
-beaufort19 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2019.csv",sep = ",", header = F, skip=2)
-beaufort20 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2020.csv",sep = ",", header = F, skip=2)
-beaufort21 = read.csv("./Raw_Data/WaterTempData/Beaufort/beaufort_2021.csv",sep = ",", header = F, skip=2)
+header <- scan ("./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2010.csv", nlines = 1,sep=",", what =character())
+beaufort11 = read.csv( "./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2011.csv",sep = ",", header = F, skip=2)
+beaufort12 = read.csv("./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2012.csv",sep = ",", header = F, skip=2)
+beaufort13 = read.csv("./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2013.csv",sep = ",", header = F, skip=2)
+beaufort14 = read.csv("./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2014.csv",sep = ",", header = F, skip=2) 
+beaufort15 = read.csv("./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2015.csv",sep = ",", header = F, skip=2)
+beaufort16 = read.csv("./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2016.csv",sep = ",", header = F, skip=2)
+beaufort17 = read.csv("./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2017.csv",sep = ",", header = F, skip=2)
+beaufort18 = read.csv("./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2018.csv",sep = ",", header = F, skip=2)
+beaufort19 = read.csv("./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2019.csv",sep = ",", header = F, skip=2)
+beaufort20 = read.csv("./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2020.csv",sep = ",", header = F, skip=2)
+beaufort21 = read.csv("./Data/Raw_Data/WaterTempData/Beaufort/beaufort_2021.csv",sep = ",", header = F, skip=2)
 
 #Import Hatteras Datasets
-Hatteras_SeaLevel<- read_csv("Raw_Data/SeaLevelData/Hatteras_2010_2022_SeaLevelRise.csv")
+Hatteras_SeaLevel<- read_csv("Data/Raw_Data/SeaLevelData/Hatteras_2010_2022_SeaLevelRise.csv")
 
-header <- scan ("./Raw_Data/WaterTempData/Hatteras/Hatteras_2010.csv", nlines = 1,sep=",", what =character())
-Hatteras11 = read.csv( "./Raw_Data/WaterTempData/Hatteras/Hatteras_2011.csv",sep = ",", header = F, skip=2)
-Hatteras12 = read.csv("./Raw_Data/WaterTempData/Hatteras/Hatteras_2012.csv",sep = ",", header = F, skip=2)
-Hatteras13 = read.csv("./Raw_Data/WaterTempData/Hatteras/Hatteras_2013.csv",sep = ",", header = F, skip=2)
-Hatteras14 = read.csv("./Raw_Data/WaterTempData/Hatteras/Hatteras_2014.csv",sep = ",", header = F, skip=2) 
-Hatteras15 = read.csv("./Raw_Data/WaterTempData/Hatteras/Hatteras_2015.csv",sep = ",", header = F, skip=2)
-Hatteras16 = read.csv("./Raw_Data/WaterTempData/Hatteras/Hatteras_2016.csv",sep = ",", header = F, skip=2)
-Hatteras17 = read.csv("./Raw_Data/WaterTempData/Hatteras/Hatteras_2017.csv",sep = ",", header = F, skip=2)
-Hatteras18 = read.csv("./Raw_Data/WaterTempData/Hatteras/Hatteras_2018.csv",sep = ",", header = F, skip=2)
-Hatteras19 = read.csv("./Raw_Data/WaterTempData/Hatteras/Hatteras_2019.csv",sep = ",", header = F, skip=2)
-Hatteras20 = read.csv("./Raw_Data/WaterTempData/Hatteras/Hatteras_2020.csv",sep = ",", header = F, skip=2)
-Hatteras21 = read.csv("./Raw_Data/WaterTempData/Hatteras/Hatteras_2021.csv",sep = ",", header = F, skip=2)
+header <- scan ("./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2010.csv", nlines = 1,sep=",", what =character())
+Hatteras11 = read.csv( "./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2011.csv",sep = ",", header = F, skip=2)
+Hatteras12 = read.csv("./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2012.csv",sep = ",", header = F, skip=2)
+Hatteras13 = read.csv("./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2013.csv",sep = ",", header = F, skip=2)
+Hatteras14 = read.csv("./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2014.csv",sep = ",", header = F, skip=2) 
+Hatteras15 = read.csv("./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2015.csv",sep = ",", header = F, skip=2)
+Hatteras16 = read.csv("./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2016.csv",sep = ",", header = F, skip=2)
+Hatteras17 = read.csv("./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2017.csv",sep = ",", header = F, skip=2)
+Hatteras18 = read.csv("./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2018.csv",sep = ",", header = F, skip=2)
+Hatteras19 = read.csv("./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2019.csv",sep = ",", header = F, skip=2)
+Hatteras20 = read.csv("./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2020.csv",sep = ",", header = F, skip=2)
+Hatteras21 = read.csv("./Data/Raw_Data/WaterTempData/Hatteras/Hatteras_2021.csv",sep = ",", header = F, skip=2)
 
 #Import Wrightsville Datasets
-Wrightsville_SeaLevel<- read_csv("Raw_Data/SeaLevelData/WrightsvilleBeach_2010_2022_SeaLevelRise.csv")
-header <- scan ("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2010.csv", nlines = 1,sep=",", what =character())
-Wrightsville11 = read.csv( "./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2011.csv",sep = ",", header = F, skip=2)
-Wrightsville12 = read.csv("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2012.csv",sep = ",", header = F, skip=2)
-Wrightsville13 = read.csv("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2013.csv",sep = ",", header = F, skip=2)
-Wrightsville14 = read.csv("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2014.csv",sep = ",", header = F, skip=2) 
-Wrightsville15 = read.csv("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2015.csv",sep = ",", header = F, skip=2)
-Wrightsville16 = read.csv("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2016.csv",sep = ",", header = F, skip=2)
-Wrightsville17 = read.csv("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2017.csv",sep = ",", header = F, skip=2)
-Wrightsville18 = read.csv("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2018.csv",sep = ",", header = F, skip=2)
-Wrightsville19 = read.csv("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2019.csv",sep = ",", header = F, skip=2)
-Wrightsville20 = read.csv("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2020.csv",sep = ",", header = F, skip=2)
-Wrightsville21 = read.csv("./Raw_Data/WaterTempData/Wrightsville/Wrightsville_2021.csv",sep = ",", header = F, skip=2)
+Wrightsville_SeaLevel<- read_csv("Data/Raw_Data/SeaLevelData/WrightsvilleBeach_2010_2022_SeaLevelRise.csv")
+header <- scan ("./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2010.csv", nlines = 1,sep=",", what =character())
+Wrightsville11 = read.csv( "./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2011.csv",sep = ",", header = F, skip=2)
+Wrightsville12 = read.csv("./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2012.csv",sep = ",", header = F, skip=2)
+Wrightsville13 = read.csv("./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2013.csv",sep = ",", header = F, skip=2)
+Wrightsville14 = read.csv("./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2014.csv",sep = ",", header = F, skip=2) 
+Wrightsville15 = read.csv("./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2015.csv",sep = ",", header = F, skip=2)
+Wrightsville16 = read.csv("./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2016.csv",sep = ",", header = F, skip=2)
+Wrightsville17 = read.csv("./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2017.csv",sep = ",", header = F, skip=2)
+Wrightsville18 = read.csv("./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2018.csv",sep = ",", header = F, skip=2)
+Wrightsville19 = read.csv("./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2019.csv",sep = ",", header = F, skip=2)
+Wrightsville20 = read.csv("./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2020.csv",sep = ",", header = F, skip=2)
+Wrightsville21 = read.csv("./Data/Raw_Data/WaterTempData/Wrightsville/Wrightsville_2021.csv",sep = ",", header = F, skip=2)
 
 ```
 
@@ -78,7 +77,7 @@ Wrightsville.Water.Temp <-rbind(Wrightsville11,Wrightsville12,Wrightsville13,Wri
 names (Wrightsville.Water.Temp) <- header
 
 #clean-up data that has weird values 
-#random values of 999 were included from original data 
+#random values of 999 were included from the original data 
 
 Beaufort.Water.Temp <- Beaufort.Water.Temp %>% 
   mutate (WTMP=ifelse(WTMP ==999,NA,WTMP)) %>% 
@@ -92,7 +91,6 @@ Wrightsville.Water.Temp <- Wrightsville.Water.Temp %>%
   mutate (WTMP=ifelse(WTMP ==999,NA,WTMP)) %>% 
   mutate(WTMP = zoo::na.approx(WTMP))
 
-#Clean-up environment and remove the individual data frames for each year
 ```
 
 ```{r}
@@ -100,7 +98,8 @@ Wrightsville.Water.Temp <- Wrightsville.Water.Temp %>%
 
 beaufort_wtmp <- Beaufort.Water.Temp %>% 
   select("#YY","MM","DD","WTMP") %>% 
-  dplyr::rename(Year = "#YY", Month = "MM", Day ="DD") %>%  mutate("Date" = make_date(year= Year, month =Month, day = Day))
+  dplyr::rename(Year = "#YY", Month = "MM", Day ="DD") %>% 
+  mutate("Date" = make_date(year= Year, month =Month, day = Day))
 
 beaufort_daily_wtmp <-  beaufort_wtmp %>% 
   dplyr::group_by(Year, Month, Day, Date) %>% 
@@ -110,12 +109,14 @@ beaufort_daily_wtmp <-  beaufort_wtmp %>%
 beaufort_monthly_wtmp <- beaufort_wtmp %>% 
   dplyr::group_by(Year, Month) %>% 
   dplyr::summarise( monthlywtmp = mean(WTMP), .groups ='drop') %>% 
-  mutate(Station = "Beaufort")
+  mutate(Station = "Beaufort")%>% 
+  mutate("Date" = make_date(year= Year, month = Month))
 
 #Wrangle Hatteras water temperature dataframe to be averaged by month
 Hatteras_wtmp <- Hatteras.Water.Temp %>% 
   select("#YY","MM","DD","WTMP") %>% 
-  dplyr::rename (Year = "#YY", Month = "MM", Day ="DD")  %>% mutate("Date" = make_date(year= Year, month =Month, day = Day))
+  dplyr::rename (Year = "#YY", Month = "MM", Day ="DD")  %>% 
+  mutate("Date" = make_date(year= Year, month =Month, day = Day))
 
 Hatteras_daily_wtmp <-  Hatteras_wtmp %>% 
   dplyr::group_by(Year, Month, Day, Date) %>% 
@@ -124,7 +125,8 @@ Hatteras_daily_wtmp <-  Hatteras_wtmp %>%
 Hatteras_monthly_wtmp <- Hatteras_wtmp %>% 
   dplyr::group_by(Year, Month) %>% 
   dplyr::summarise( monthlywtmp = mean(WTMP), .groups ='drop') %>% 
-  mutate(Station = "Hatteras")
+  mutate(Station = "Hatteras")%>% 
+  mutate("Date" = make_date(year= Year, month = Month))
 
 
 #Wrangle Wrightsville water temperature data frame to be averaged by month
@@ -142,17 +144,22 @@ Wrightsville_daily_wtmp <-  Wrightsville_wtmp %>%
 Wrightsville_monthly_wtmp <- Wrightsville_wtmp %>% 
   dplyr::group_by(Year, Month) %>% 
   dplyr::summarise( monthlywtmp = mean(WTMP), .groups ='drop') %>% 
-  mutate(Station = "Wrightsville")
+  mutate(Station = "Wrightsville") %>% 
+  mutate("Date" = make_date(year= Year, month = Month))
+
+```
+
+```{r}
 
 #combine daily datasets for water temperature 
 
 combine_daily_water_temp <- rbind (beaufort_daily_wtmp, Hatteras_daily_wtmp, Wrightsville_daily_wtmp)
-write.csv(combine_daily_water_temp, 'combine_daily_water_temp.csv')
+write.csv(combine_daily_water_temp, './Data/Processed_Data/combine_daily_water_temp.csv')
 
 #combine monthly datasets for water temperature 
 
 combine_monthly_water_temp <- rbind (beaufort_monthly_wtmp, Hatteras_monthly_wtmp, Wrightsville_monthly_wtmp)
-write.csv(combine_monthly_water_temp, 'combine_monthly_water_temp.csv')
+write.csv(combine_monthly_water_temp, './Data/Processed_Data/combine_monthly_water_temp.csv')
 
 ```
 
@@ -164,7 +171,7 @@ Hatteras_SeaLevel <- Hatteras_SeaLevel %>% select(c(1,6,7)) %>% mutate(Station= 
 Wrightsville_SeaLevel <-Wrightsville_SeaLevel %>% select(c(1,6,7)) %>% mutate(Station= "Wrightsville")
 
 combine_sealevel <- rbind (Beaufort_SeaLevel, Hatteras_SeaLevel, Wrightsville_SeaLevel)
-write.csv(combine_sealevel, 'combine_sealevel.csv')
+write.csv(combine_sealevel, './Data/Processed_Data/combine_sealevel.csv')
 
 
 ```

@@ -15,21 +15,43 @@ mainfont: Times New Roman
 
 \newpage
 \tableofcontents 
+
 \newpage
 \listoftables 
+
 \newpage
-\listoffigures 
+\listoffigures
+
 \newpage
 
 ```{r setup, include=FALSE}
 # Set your working directory
+getwd()
+setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
 
 # Load your packages
 
+library(tidyverse)
+library(dplyr)
+library(plyr)
+library(lubridate)
+library(stringr)
+library(readr)
+library(zoo)
+library(Kendall)
+library(ggplot2)
+library(gridExtra)
+
 # Set your ggplot theme
 
-# Load your datasets
+mytheme <- theme_classic(base_size = 14) +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "top")
+theme_set(mytheme)
 
+# Load your datasets
+combined_sea_level_data <- read.csv("./Data/Processed_Data/combine_sealevel.csv")
+combined_water_temp_data<- read.csv("./Data/Processed_Data/combine_monthly_water_temp.csv")
 ```
 
 

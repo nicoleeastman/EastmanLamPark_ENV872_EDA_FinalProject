@@ -5,6 +5,7 @@ We are using this repository to upload data from NOAA's Tides & Currents Dataset
 
 <describe the purpose of this repository, the information it contains, and any relevant analysis goals. What, why, where, when, how?>
 
+
 ## Investigators
 Nicole Eastman, Ariel Lam, and Jiyoung Park are Masters students at the Nicholas School of the Environment at Duke University. 
 Contact information:
@@ -19,8 +20,6 @@ climate change
 coastal change
 seasonality
 statistical significance
-
-<add relevant keywords here>
 
 ## Database Information
 Data from NOAA's Tides and Currents Database was accessed on November 20, 2022. The data acquired from the website includes monthly sea level data from Beaufort Marine Lab, Hatteras Island, and Wrightsville Beach from their earliest recorded data April 27, 2010 to November 30, 2022. The water temperature data was collected every 6 minutes by NOAA and we acquired this data from NOAA's National Data Buoy Center on December 1, 2022. The water temperature data dates back to January 1, 2011. We wrangled the data to average the sea level and water temperature measurements from NOAA for each month from 2011 to 2022 in order to create dataframes with identical periods of measurements for the analyses.
