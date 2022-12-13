@@ -1,6 +1,6 @@
 ```{r}
 #Set working directory and load in libraries
-setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
+#setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
 getwd()
 
 library(tidyverse)
@@ -64,6 +64,23 @@ print(combined_2011_2021)
 
 ```{r}
 #Exploring Trends in Water Temperature
+combined_daily_wtmp_data <- read.csv("combine_daily_water_temp.csv")
+combined_daily_wtmp_data$Date<-as.Date(combined_daily_wtmp_data$Date, format = "%Y-%m-%d")
+daily_wtmp_level_plot <-ggplot(combined_daily_wtmp_data, aes(x =Date, y=dailywtmp,group= Station))+
+  geom_line(aes(color=Station))+
+  labs(title = "Daily Water Temperature (2011-2022)", y= "Daily Water Temp (Celcius)", x= "Date")+
+  scale_x_date(date_breaks = "6 months", date_labels = "%Y-%m-%d")+
+  theme(axis.text.x = element_text(angle=60, hjust=1))
+print(daily_wtmp_level_plot)
+
+combined_monthly_wtmp_data <- read.csv("combine_monthly_water_temp.csv")
+combined_monthly_wtmp_data$Date<-as.Date(combined_monthly_wtmp_data$Date, format = "%Y-%m-%d")
+monthly_wtmp_level_plot <-ggplot(combined_monthly_wtmp_data, aes(x =Date, y=monthlywtmp,group= Station))+
+  geom_line(aes(color=Station))+
+  labs(title = "Monthly Water Temperature (2011-2022)", y= "Monthly Water Temp (Celcius)", x= "Date")+
+  scale_x_date(date_breaks = "6 months", date_labels = "%Y-%m")+
+  theme(axis.text.x = element_text(angle=60, hjust=1))
+print(monthly_wtmp_level_plot)
 
 ```
 
