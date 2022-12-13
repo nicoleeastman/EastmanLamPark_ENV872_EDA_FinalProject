@@ -8,14 +8,14 @@ library(lubridate)
 library(stringr)
 library(readr)
 library(zoo)
-
+library(Kendall)
 ```
 
 ```{r}
 #Import data
 getwd()
 #setwd("/Users/ariellam/Desktop/EDA-Fall2022/EastmanLamPark_ENV872_EDA_FinalProject/EastmanLamPark_ENV872_EDA_FinalProject")
-setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
+#setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
 
 
 combined_sea_level_data <- read.csv("./Processed_Data/combine_sealevel.csv")
@@ -28,7 +28,7 @@ combined_water_temp_data$Date <-as.yearmon(paste(combined_water_temp_data$Year, 
 ```
 
 ```{r}
-#Beaufort Time Series
+#Beaufort Sea Level Time Series
 Beaufort <- combined_sea_level_data %>% filter(Station == "Beaufort")
 
 Beaufort.monthly.ts <- ts(Beaufort$MSL..ft.,
@@ -41,12 +41,19 @@ Beaufort_Monthly_Sea_Level <- stl(Beaufort.monthly.ts,
 plot(Beaufort_Monthly_Sea_Level)
 
 Beaufort_monthly_sea_level_monotonic_trend_analysis <- Kendall::SeasonalMannKendall(Beaufort.monthly.ts)
+
 summary(Beaufort_monthly_sea_level_monotonic_trend_analysis)
+
+Beaufort_monthly_sea_level_monotonic_trend_analysis_no_szn <- Beaufort.monthly.ts - Beaufort_Monthly_Sea_Level$time.series[,1]
+
+Beaufort_monthly_sea_level_no_szn_trend <- MannKendall(Beaufort_monthly_sea_level_monotonic_trend_analysis_no_szn)
+
+summary(Beaufort_monthly_sea_level_no_szn_trend)
 
 ```
 
 ```{r}
-#Hatteras Time Series
+#Hatteras Sea Level Time Series
 Hatteras <- combined_sea_level_data %>% filter(Station == "Hatteras")
 
 Hatteras.monthly.ts <- ts(Hatteras$MSL..ft.,
@@ -60,10 +67,16 @@ plot(Hatteras_Monthly_Sea_Level)
 Hatteras_monthly_sea_level_monotonic_trend_analysis <- Kendall::SeasonalMannKendall(Hatteras.monthly.ts)
 summary(Hatteras_monthly_sea_level_monotonic_trend_analysis)
 
+Hatteras_monthly_sea_level_monotonic_trend_analysis_no_szn <- Hatteras.monthly.ts - Hatteras_Monthly_Sea_Level$time.series[,1]
+
+Hatteras_monthly_sea_level_no_szn_trend <- MannKendall(Hatteras_monthly_sea_level_monotonic_trend_analysis_no_szn)
+
+summary(Hatteras_monthly_sea_level_no_szn_trend)
+
 ```
 
 ```{r}
-#Wrightsville Time Series
+#Wrightsville Sea Level Time Series
 Wrightsville <- combined_sea_level_data %>% filter(Station == "Wrightsville")
 
 Wrightsville.monthly.ts <- ts(Wrightsville$MSL..ft.,
@@ -77,18 +90,85 @@ plot(Wrightsville_Monthly_Sea_Level)
 Wrightsville_monthly_sea_level_monotonic_trend_analysis <- Kendall::SeasonalMannKendall(Wrightsville.monthly.ts)
 
 summary(Wrightsville_monthly_sea_level_monotonic_trend_analysis)
+
+
+Wrightsville_monthly_sea_level_monotonic_trend_analysis_no_szn <- Wrightsville.monthly.ts - Wrightsville_Monthly_Sea_Level$time.series[,1]
+
+Wrightsville_monthly_sea_level_no_szn_trend <- MannKendall(Wrightsville_monthly_sea_level_monotonic_trend_analysis_no_szn)
+
+summary(Wrightsville_monthly_sea_level_no_szn_trend)
 ```
 
 ```{r}
 #Beaufort Water Temperature Time Series
+Beaufort_water_temp_filter <- combined_water_temp_data %>% filter(Station == "Beaufort")
+
+Beaufort.temp.monthly.ts <- ts(Beaufort_water_temp_filter$monthlywtmp,
+    start = c(2011, 1), frequency = 12)
+
+
+Beaufort_Monthly_WaterTemp <- stl(Beaufort.temp.monthly.ts,
+    s.window = "periodic")
+
+plot(Beaufort_Monthly_WaterTemp)
+
+Beaufort_monthly_wtmp_monotonic_trend_analysis <- Kendall::SeasonalMannKendall(Beaufort.temp.monthly.ts)
+summary(Beaufort_monthly_wtmp_monotonic_trend_analysis)
+
+Beaufort_monthly_wtmp_monotonic_trend_analysis_no_szn <- Beaufort.temp.monthly.ts - Beaufort_Monthly_WaterTemp$time.series[,1]
+
+Beaufort_monthly_wtmp_no_szn_trend <- MannKendall(Beaufort_monthly_wtmp_monotonic_trend_analysis_no_szn)
+
+summary(Beaufort_monthly_wtmp_no_szn_trend)
 ```
 
 ```{r}
 #Hatteras Water Temperature Time Series
+
+Hatteras_water_temp_filter <- combined_water_temp_data %>% filter(Station == "Hatteras")
+
+Hatteras.temp.monthly.ts <- ts(Hatteras_water_temp_filter$monthlywtmp,
+    start = c(2011, 1), frequency = 12)
+
+
+Hatteras_Monthly_WaterTemp <- stl(Hatteras.temp.monthly.ts,
+    s.window = "periodic")
+
+plot(Hatteras_Monthly_WaterTemp)
+
+Hatteras_monthly_wtmp_monotonic_trend_analysis <- Kendall::SeasonalMannKendall(Hatteras.temp.monthly.ts)
+summary(Hatteras_monthly_wtmp_monotonic_trend_analysis)
+
+Hatteras_monthly_wtmp_monotonic_trend_analysis_no_szn <- Hatteras.temp.monthly.ts - Hatteras_Monthly_WaterTemp$time.series[,1]
+
+Hatteras_monthly_wtmp_no_szn_trend <- MannKendall(Hatteras_monthly_wtmp_monotonic_trend_analysis_no_szn)
+
+summary(Hatteras_monthly_wtmp_no_szn_trend)
+
 ```
 
 ```{r}
 #Wrightsville Water Temperature Time Series
+Wrightsville_water_temp_filter <- combined_water_temp_data %>% filter(Station == "Wrightsville")
+
+Wrightsville.temp.monthly.ts <- ts(Wrightsville_water_temp_filter$monthlywtmp,
+    start = c(2011, 1), frequency = 12)
+
+
+Wrightsville_Monthly_WaterTemp <- stl(Wrightsville.temp.monthly.ts,
+    s.window = "periodic")
+
+plot(Wrightsville_Monthly_WaterTemp)
+
+Wrightsville_monthly_wtmp_monotonic_trend_analysis <- Kendall::SeasonalMannKendall(Wrightsville.temp.monthly.ts)
+summary(Wrightsville_monthly_wtmp_monotonic_trend_analysis)
+
+Wrightsville_monthly_wtmp_monotonic_trend_analysis_no_szn <- Wrightsville.temp.monthly.ts - Wrightsville_Monthly_WaterTemp$time.series[,1]
+
+Wrightsville_monthly_wtmp_no_szn_trend <- MannKendall(Wrightsville_monthly_wtmp_monotonic_trend_analysis_no_szn)
+
+summary(Wrightsville_monthly_wtmp_no_szn_trend)
+
 ```
 
 ```{r}
