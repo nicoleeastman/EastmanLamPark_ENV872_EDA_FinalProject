@@ -42,6 +42,7 @@ library(gridExtra)
 #install.packages("ggcorrplot")
 library(ggcorrplot)
 
+
 # Set your ggplot theme
 mytheme <- theme_classic(base_size = 14) +
   theme(axis.text = element_text(color = "black"), 
@@ -174,7 +175,7 @@ clearly transferred into correct data frame. Thus, changed txt files into csv
 files and combined each year's data by rbind. 
 The original data had some error and random value of 999 was in between the wtmp
 values, so we changed all 999 values into NA and replaced that value into the 
-approximate data. 
+approximate data using linear interpolation. 
 Then we selected columns that we need, which was year, month, day, and water 
 temperature. Then calculated daily and monthly averages using group_by and 
 summarize functions. 
@@ -187,9 +188,32 @@ changes in sea level and water temperature over the past 12 years using a Mann
 Kendall test. We will then identify if there is a statistical relationship 
 between the two parameters using a Kendall correlation test.
 
+The data was already in in more simplified format in comparison to the water 
+temperature data. The data came off the NOAA website in a monthly collected data 
+csv format from years 2011 to 2022. In order to isolate the variables of 
+interest as the data set came with other variables such as low range and high 
+range tide data, the select function was used concatenating the specific columns 
+of interest. Three columns of the original data set were kept, and those were 
+the date, the MSL (mean sea level) and MTL (mean tide level). The mutate 
+function was then used to create a Station column in order for the sites to be 
+differentiated when combined into a large dataset. The data from all three sites 
+were joined with the rbind function. 
+
 ##add a table summarizing the dataset structure 
 Add a table that summarizes your data structure (variables, units, ranges and/or central tendencies, data source if multiple are used, etc.). This table can be made in markdown text or inserted as a `kable` function in an R chunk. If the latter, do not include the code used to generate your table.
+```{r}
+titles <- c("Variable", "Units", "Source")
+source_1 <- c("Mean Sea Level", "ft", "NOAA Tide's & Currents")
+source_2<- c("Mean Tide Level", "ft", "NOAA Tide's & Currents")
+source_3 <-c("Daily Temperature", "Celcius", "NOAA's National Data Buoy Center")
 
+rbind(titles, source_1, source_2, source_3)
+```
+
+| Variable | Units | Source |
+|Mean Sea Level| ft| NOAA Tide's & Currents |
+|Mean Tide Level| ft| NOAA Tide's & Currents |
+|Daily Temperature| Celcius| NOAA's National Data Buoy Center |
 
 
 ```{r}
