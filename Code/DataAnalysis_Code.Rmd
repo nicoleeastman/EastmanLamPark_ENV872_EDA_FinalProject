@@ -88,7 +88,7 @@ Wrightsville_Monthly_Sea_Level <- stl(Wrightsville.monthly.ts,
 
 plot(Wrightsville_Monthly_Sea_Level)
 
-Wrightsville_monthly_sea_level_monotonic_trend_analysis <- Kendall::SeasonalMannKendall(Wrightsville.monthly.ts)
+Wrightsville_monthly_sea_level_monotonic_trend_analysis<- Kendall::SeasonalMannKendall(Wrightsville.monthly.ts)
 
 summary(Wrightsville_monthly_sea_level_monotonic_trend_analysis)
 
