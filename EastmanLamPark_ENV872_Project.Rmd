@@ -420,9 +420,9 @@ sea_level_2021 <- ggplot(combined_sea_level_data, aes(x=Date, y=MSL..ft.,
                date_breaks="2 months", date_labels ="%b-%y")
 print(sea_level_2021)
 
-combined_2011_2021<- grid.arrange(sea_level_2011, sea_level_2021, ncol= 2,
-                                  common.ledgend= TRUE)
-print(combined_2011_2021)
+#combined_2011_2021<- grid.arrange(sea_level_2011, sea_level_2021, ncol= 2,
+                              #common.ledgend= TRUE)
+#print(combined_2011_2021)
 ```
 
 ## Sea level data exploration 
