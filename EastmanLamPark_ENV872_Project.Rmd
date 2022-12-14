@@ -201,13 +201,20 @@ were joined with the rbind function.
 
 ##add a table summarizing the dataset structure 
 Add a table that summarizes your data structure (variables, units, ranges and/or central tendencies, data source if multiple are used, etc.). This table can be made in markdown text or inserted as a `kable` function in an R chunk. If the latter, do not include the code used to generate your table.
-```{r}
-titles <- c("Variable", "Units", "Source")
-source_1 <- c("Mean Sea Level", "ft", "NOAA Tide's & Currents")
-source_2<- c("Mean Tide Level", "ft", "NOAA Tide's & Currents")
-source_3 <-c("Daily Temperature", "Celcius", "NOAA's National Data Buoy Center")
+```{r, echo= FALSE}
 
-rbind(titles, source_1, source_2, source_3)
+source_1 <- c("Mean Sea Level   ", "   ft", "      NOAA Tide's & Currents") 
+source_2<- c("Mean Tide Level   ", "   ft", "      NOAA Tide's & Currents")
+source_3 <-c("Daily Temperature   ", "  °C", "      NOAA's National Data Buoy Center")
+
+dataset_structure <- data.frame(rbind( source_1, source_2, source_3))
+
+names(dataset_structure) <- NULL  
+rownames(dataset_structure) <- NULL  
+
+knitr::kable(dataset_structure,col.names= c("Variable", "Units", "Source"), "simple")
+
+
 ```
 
 | Variable | Units | Source |
