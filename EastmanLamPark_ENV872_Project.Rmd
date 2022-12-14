@@ -1,23 +1,44 @@
 ---
-title:"Sea Level and Water Temperature Data Analyses in Coastal North Carolina"
+title: "Sea Level and Water Temperature Data Analyses in Coastal North Carolina"
 author: "Nicole Eastman, Ariel Lam, and Jiyoung Park"
 date: "December 14, 2022"
 output: pdf_document
 geometry: margin=2.54cm
 ---
+
 \newpage
 \tableofcontents 
+1. List of Tables
+2. List of Figures
+3. Rationale and Research Questions
+4. Data Set Information
+5. Exploratory Analysis 
+6. Analyses
+  i) Beaufort Sea Level Time Series
+  ii) Hatteras Sea Level Time Series
+  iii) Wrightsville Sea Level Time Series
+  iv) Beaufort Water Temperature Time Series
+  v)  Hatteras Water Temperature Time Series
+  vi) Wrightsville Water Temperature Time Series
+  vii) Correlation Tests between Sea Level Changes and Water Temperature Changes
+7. Summary and Conclusion
+
 
 \newpage
 \listoftables 
+
 
 \newpage
 \listoffigures 
 figure 1.  Sea Level Trend Exploration
 figure 2. Water Temperature Trend Exploration
-figure 3. 
-figure 4. 
-figure 5. 
+figure 3. Beaufort Sea Level Time Series Plot
+figure 4. Hatteras Sea Level Time Series Plot
+figure 5. Wrightsville Sea Level Time Series Plot
+figure 6. Beaufort Water Temperature Time Series Plot
+figure 7. Hatteras Water Temperature Time Series Plot
+figure 8. Correlation plot
+
 
 
 \newpage
@@ -217,10 +238,7 @@ knitr::kable(dataset_structure,col.names= c("Variable", "Units", "Source"), "sim
 
 ```
 
-| Variable | Units | Source |
-|Mean Sea Level| ft| NOAA Tide's & Currents |
-|Mean Tide Level| ft| NOAA Tide's & Currents |
-|Daily Temperature| Celcius| NOAA's National Data Buoy Center |
+
 
 
 ```{r}
