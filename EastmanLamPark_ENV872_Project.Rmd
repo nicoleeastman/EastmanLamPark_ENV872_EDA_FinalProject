@@ -44,6 +44,9 @@ figure 8. Correlation plot
 \newpage
 
 ```{r setup, include=FALSE}
+#Global settings
+knitr::opts_chunk$set
+
 # Set your working directory
 #setwd("~R/EDA_Final")
 #setwd("~/EastmanLamPark_ENV872_EDA_FinalProject")
@@ -177,11 +180,10 @@ Beaufort, Cape Hatteras, and Wrightsville Beach?
 To answer this research question, we gathered sea level and water temperature 
 data from NOAA. Sea level and water temperature were the chosen parameters to
 assess because they are indicators of climate change, and we want 
-to analyze the changes occurring on the coast of North Carolina due to climate 
-change. We assumed that sea level changes have a relationship with global 
+to analyze the changes occurring on the coast of North Carolina due to this phenomenon. We predicted based on previous studies, that sea level changes have a relationship with global 
 warming and thus there will be a correlation with increased water temperature.
-Three sites(Beaufort, Cape Hatteras, Wrightsville Beach) were selected because 
-those sites are spread out across the North Carolina's coast. 
+Three sites (Beaufort, Cape Hatteras, Wrightsville Beach) were selected because 
+those sites are spread out across North Carolina's coast. 
 
 
 \newpage
@@ -190,26 +192,19 @@ those sites are spread out across the North Carolina's coast.
 We are using this repository to upload data from NOAA's Tides&Currents Datasets
 for sea level measurements and NOAA's National Data Buoy Center for water
 temperature measurements. 
-The data begins on the first day of 2011 and ends on November 31, 2022. 
+
+The water temperature data begins on the first day of 2011 and ends on November 31, 2022. 
 The raw data for water temperature was in txt file, and those files did not 
 clearly transferred into correct data frame. Thus, changed txt files into csv 
 files and combined each year's data by rbind. 
-The original data had some error and random value of 999 was in between the wtmp
+The original data had place-holder values of 999 for some of the wtmp
 values, so we changed all 999 values into NA and replaced that value into the 
-approximate data using linear interpolation. 
+approximate data point using linear interpolation. 
 Then we selected columns that we need, which was year, month, day, and water 
 temperature. Then calculated daily and monthly averages using group_by and 
-summarize functions. 
-We created the processed data and saved them as csv files. 
+summarize functions. We created the processed data and saved them as csv files. 
 
-##add sea level wrangling process here 
-
-This project will use a time series analysis to identify seasonal trends and 
-changes in sea level and water temperature over the past 12 years using a Mann 
-Kendall test. We will then identify if there is a statistical relationship 
-between the two parameters using a Kendall correlation test.
-
-The data was already in in more simplified format in comparison to the water 
+The sea level data was already in a more simplified format in comparison to the water 
 temperature data. The data came off the NOAA website in a monthly collected data 
 csv format from years 2011 to 2022. In order to isolate the variables of 
 interest as the data set came with other variables such as low range and high 
@@ -218,11 +213,16 @@ of interest. Three columns of the original data set were kept, and those were
 the date, the MSL (mean sea level) and MTL (mean tide level). The mutate 
 function was then used to create a Station column in order for the sites to be 
 differentiated when combined into a large dataset. The data from all three sites 
-were joined with the rbind function. 
+were joined with the rbind function. The date column in the data frame was calssified as a date and the date was separated into Year and Month columns, and then grouped by those columns for future data exploration and analysis. The final processed data frame was saved as a csv file. 
 
-##add a table summarizing the dataset structure 
-Add a table that summarizes your data structure (variables, units, ranges and/or central tendencies, data source if multiple are used, etc.). This table can be made in markdown text or inserted as a `kable` function in an R chunk. If the latter, do not include the code used to generate your table.
+This project will use a time series analysis to identify seasonal trends and 
+changes in sea level and water temperature over the past 12 years using a Mann 
+Kendall test. We will then identify if there is a statistical relationship 
+between the two parameters using a Kendall correlation test.
+
+
 ```{r, echo= FALSE}
+#Data Table Summary
 
 source_1 <- c("Mean Sea Level   ", "   ft", "      NOAA Tide's & Currents") 
 source_2<- c("Mean Tide Level   ", "   ft", "      NOAA Tide's & Currents")
@@ -414,7 +414,7 @@ print(sea_level_2011)
 sea_level_2021 <- ggplot(combined_sea_level_data, aes(x=Date, y=MSL..ft.,
                                                       group = Station))+
   geom_line(aes(color = Station)) + geom_smooth(method= "lm", se=FALSE) +
-    labs(title = "Mean Sea Levels (2011)",
+    labs(title = "Mean Sea Levels (2021)",
         y = "Mean Sea Level (ft)", x = "Date (Month-Year)") +
   scale_x_date(limits= as.Date(c("2021-01-01", "2021-12-01")), 
                date_breaks="2 months", date_labels ="%b-%y")
@@ -426,8 +426,9 @@ print(sea_level_2021)
 ```
 
 ## Sea level data exploration 
+The first plot in the previous r code chunk, sea_level_plot, displays the mean sea level measurements from 2010 to 2022 for each station. There are fluctuations in sea level on a month-to-month basis, but trend lines represent a slight increase in sea level at all three sites since 2010. The tide_level plot shows the mean tide levels for each station, and produced similar results. We noticed fluctuations from month-to-month, but the linear model lines show an increase in tide levels at all the sites.  
 
-how many graphs are there--- each graphs need seperate descriptions
+The third and fourth graphs display the mean sea levels in 2011 and 2022, respectively sea_level_2011 and sea_level_2021. Both of these graphs indicate increasing mean sea levels over the course of the year for Wrightsville Beach and Beaufort, but decreasing sea levels on Hatteras Island. The trend lines look very similar between the graphs so we are interested in the results produced by the time series analyses for more information.
 
 ```{r,include = FALSE, fig.cap="Water Temperature Trend Exploration", fig.align='left', fig.height= 2.5, fig.width= 5}
 #Exploring Trends in Water Temperature
@@ -468,7 +469,7 @@ print(monthly_wtmp_level_plot)
 ## Water temperature data exploration 
 
 A clear seasonal changes is observed in water temperature data for all three 
-sites. Water temperatures are high in the summer seasons and low in the winter
+sites according to the monthly_wtmp_level_plot and daily_wtmp_level_plot graphs. Water temperatures are high in the summer seasons and low in the winter
 seasons. There is a overall increase in water temperature in Beaufort and 
 Wrightsville, but there was a overall decrease in water temperature in Hatteras. 
 The biggest increase in temperature was observed in Beaufort. 
@@ -508,7 +509,7 @@ summary(Beaufort_monthly_sea_level_no_szn_trend)
 
 ### Beaufort Sea Level Time Series
 
- From the Beaufort sea level time series plots, it appears that the trend does appear to be gradually increasing over time with a couple of fluctuations. Therefore, both a non-seasonal and a seasonal Mann Kendall analysis should be run in order to see clearer quantified trends. Mann Kendall has the ability to detect accept or reject the presence of monotonic trends. When the seasonal Mann Kendall was ran, the score was 407 with a tau of (0.447) and a 2-sided p-value of (2.94e^-13). This p-value is less than significance level(0.05), so we reject null hypothesis that there is no monotonic trend. This underscores that the data has a monotonic trend and tau value(0.447) is statistically significant. The positive value of tau signifies an increasing trend. The seasonal Mann Kendall test only compares data values of the same season. When the seasonal component was removed, the score increased to 4862, with a  tau of (0.413), and an even smaller 2-sided p-value of (2.22e-16). Thus, we reject null hypothesis again, and the positive value of tau signifies an increasing trend. Based on the fact that both tests suggest there is an increasing trend, we can tentatively state that the sea levels of Beaufort are generally increasing over time.
+ According to the Beaufort sea level time series analyses and plot, Beaufort_Monthly_Sea_Level, it appears that the trend does seem to gradually increase over time with a couple of fluctuations. Therefore, both a non-seasonal and a seasonal Mann Kendall analysis should be run in order to see clearer quantified trends. Mann Kendall has the ability to detect, accept or reject the presence of monotonic trends. When the seasonal Mann Kendall was ran, the score was 407 with a tau of (0.447) and a 2-sided p-value of (2.94e^-13). This p-value is less than significance level(0.05), so we reject the null hypothesis that there is no monotonic trend. This underscores that the data has a monotonic trend and the tau value(0.447) is statistically significant. The positive value of tau signifies an increasing trend. The seasonal Mann Kendall test only compares data values of the same season. When the seasonal component was removed, the score increased to 4862, with a  tau of (0.413), and an even smaller 2-sided p-value of (2.22e-16). Thus, we reject null hypothesis again, and the positive value of tau signifies an increasing trend. Based on the fact that both tests suggest there is an increasing trend, we can tentatively state that the sea levels of Beaufort are generally increasing over time.
  
 ```{r,include = FALSE,fig.cap="Hatteras Sea Level Timeseries", fig.align='left', fig.height= 2.5}
 #Hatteras Sea Level Time Series
@@ -538,7 +539,7 @@ summary(Hatteras_monthly_sea_level_no_szn_trend)
 
 ### Hatteras Sea Level Time Series
 
-From the Hatteras sea level time series plots, it appears that the overall data trend in sea level rise is increasing over time. Therefore, both a non-seasonal and a seasonal Mann Kendall analysis should be run in order to see clearer quantified trends. When the seasonal Mann Kendall was ran, the score was (216) with a tau of (0.274) and a 2-sided p-value of (1.86e^-5). This p-value is less than significance level(0.05), so we reject null hypothesis that there is no monotonic trend. This underscores that the data has a monotonic trend and tau value(0.274) is statistically significant. The positive value of tau signifies that there is an increasing trend. The seasonal Mann Kendall test only compares data values of the same season. When the seasonal component was removed, the score increased to 2806, with a  tau of (0.273), and an even smaller 2-sided p-value of (1.31e-6). The positive value of tau signifies an increasing trend.Based on the fact that both tests suggest there is an increasing trend, we can tentatively state that the sea levels of Hatteras are generally increasing over time. 
+The Hatteras sea level time series analyses and plot, Hatteras_Monthly_Sea_Level, indicate that the overall data trend in sea level rise is increasing over time. Therefore, both a non-seasonal and a seasonal Mann Kendall analysis should be run in order to see clearer quantified trends. When the seasonal Mann Kendall was ran, the score was (216) with a tau of (0.274) and a 2-sided p-value of (1.86e^-5). This p-value is less than significance level(0.05), so we reject the null hypothesis that there is no monotonic trend. This underscores that the data has a monotonic trend and the tau value(0.274) is statistically significant. The positive value of tau signifies that there is an increasing trend. The seasonal Mann Kendall test only compares data values of the same season. When the seasonal component was removed, the score increased to 2806, with a  tau of (0.273), and an even smaller 2-sided p-value of (1.31e-6). The positive value of tau signifies an increasing trend. Based on the fact that both tests suggest there is an increasing trend, we can tentatively state that the sea levels of Hatteras are generally increasing over time. 
 
 
 ```{r,include = FALSE, fig.cap="Wrightsville Sea Level Timeseries", fig.align='left', fig.height= 2.5}
@@ -569,7 +570,7 @@ summary(Wrightsville_monthly_sea_level_no_szn_trend)
 
 ### Wrightsville Sea Level Time Series
 
-From the Wrightsville sea level time series plots, it appears that the trend of sea level seems to be gradually increasing over time with a couple of fluctuations. When the seasonal Mann Kendall was ran, the score was 175 with a tau of (0.242) and 2-sided p-value of (0.0002). The p-value of (0.0002) is less than significance level(0.05), so we reject null hypothesis that there is no monotonic trend. Therefore, the data has a monotonic trend. The positive value of tau signifies an increasing trend. The seasonal Mann Kendall test only compares data values of the same season. When the seasonal component was removed, the score increased to 2824, with a  tau of (0.299), and an even smaller 2-sided p-value of (2.38e-7). The positive value of tau signifies an increasing trend.Based on the fact that both tests suggest there is an increasing trend, we can tentatively state that the sea levels of Beaufort are generally increasing over time. 
+According to the Wrightsville sea level time series analyses and plot, Wrightsville_Monthly_Sea_Level, it appears that the trend of sea level seems to be gradually increasing over time with a couple of fluctuations. When the seasonal Mann Kendall was ran, the score was 175 with a tau of (0.242) and 2-sided p-value of (0.0002). The p-value of (0.0002) is less than significance level(0.05), so we reject null hypothesis that there is no monotonic trend. Therefore, the data has a monotonic trend. The positive value of tau signifies an increasing trend. The seasonal Mann Kendall test only compares data values of the same season. When the seasonal component was removed, the score increased to 2824, with a  tau of (0.299), and an even smaller 2-sided p-value of (2.38e-7). The positive value of tau signifies an increasing trend. Based on the fact that both tests suggest there is an increasing trend, we can tentatively state that the sea levels of Beaufort are generally increasing over time. 
 
 ```{r,include = FALSE, fig.cap="Beaufort Water Temperature Timeseries", fig.align='left', fig.height= 2.5}
 #Beaufort Water Temperature Time Series
@@ -600,7 +601,7 @@ summary(Beaufort_monthly_wtmp_no_szn_trend)
 
 ### Beaufort Water Temperature Time Series 
 
-The Beaufort water temperature time series plot suggests an overall increasing trend in water temperature over time. The seasonal Mann Kendall test resulted in a score of 190, a tau value of (0.288) and p-value of (1.96 e-5). This p-value is less than significance level(0.05), so we reject null hypothesis that there is no monotonic trend. This suggests that a monotonic trend can be accepted and it shows a gradual increase in water temperature over time as tau is positive. Removal of seasonality resulted in a score of 1972, tau of (0.228), and less, but still statistically significant 2-sided pvalue of (0.0001) demonstrating that the removal of seasonality still highlights a monotonic trend in water temperature at the Beaufort site. Therefore we can tentatively say that water temperature is generally increasing over time at Beaufort. 
+The Beaufort water temperature time series plot, Beaufort_Monthly_WaterTemp, suggests an overall increasing trend in water temperature over time. The seasonal Mann Kendall test resulted in a score of 190, a tau value of (0.288) and p-value of (1.96 e-5). This p-value is less than significance level(0.05), so we reject the null hypothesis that there is no monotonic trend. This suggests that a monotonic trend can be accepted and it shows a gradual increase in water temperature over time as tau is positive. Removal of seasonality resulted in a score of 1972, tau of (0.228), and less, but still statistically significant 2-sided pvalue of (0.0001) demonstrating that the removal of seasonality still highlights a monotonic trend in water temperature at the Beaufort site. Therefore we can tentatively say that water temperature is generally increasing over time at Beaufort. 
 
 ```{r,include = FALSE, fig.cap="Hatteras Water Temperature Timeseries", fig.align='left', fig.height= 2.5}
 #Hatteras Water Temperature Time Series
@@ -633,7 +634,7 @@ summary(Hatteras_monthly_wtmp_no_szn_trend)
 
 ### Hatteras Water Temperature Time Series 
 
-The Hatteras water temperature time series plot suggests a relatively random distribution of water temperature over time. The seasonal Mann Kendall test resulted in a score of 10, a tau value of (0.0152) and p-value of (0.82). A p-value of 0.82 is greater than significance level(0.05), so we accept our null hypothesis that there is no monotonic trend. Removal of seasonality resulted in a score of -54, tau of (-0.00625), and also, a non-statistically significant 2-sided pvalue of (0.92) demonstrating that the removal of seasonality also rejects the presence of a monotonic trend in water temperature at the Hatteras site. Thus, there is no uni-direction increase or decrease in water temperature over time at Hatteras. 
+The Hatteras water temperature time series analyses and plot, Hatteras_Monthly_WaterTemp, suggest a relatively random distribution of water temperature over time. The seasonal Mann Kendall test resulted in a score of 10, a tau value of (0.0152) and p-value of (0.82). A p-value of 0.82 is greater than significance level(0.05), so we accept our null hypothesis that there is not a monotonic trend present. Removal of seasonality resulted in a score of -54, tau of (-0.00625), and also, a non-statistically significant 2-sided pvalue of (0.92) demonstrating that the removal of seasonality also rejects the presence of a monotonic trend in water temperature at the Hatteras site. Thus, there is no uni-direction increase or decrease in water temperature over time at Hatteras. 
 
 ```{r,include = FALSE, fig.cap="Wrightsville Water Temperature Timeseries", fig.align='left', fig.height= 2.5}
 #Wrightsville Water Temperature Time Series
@@ -665,7 +666,7 @@ summary(Wrightsville_monthly_wtmp_no_szn_trend)
 
 ### Wrightsville Water Temperature Time Series 
 
-The Wrightsville water temperature time series plot suggests a relatively uniform, mildly fluctuating distribution of water temperature over time. The seasonal Mann Kendall test resulted in a score of 4, a tau value of (0.006) and p-value of (0.92). Since the p value is greater than significance level(0.05), we accept our null hypothesis that there is no monotonic trend. Removal of seasonality resulted in a score of 100, tau of (0.116), and also, a non-statistically significant 2-sided pvalue of (0.84) demonstrating that the removal of seasonality also rejects the presence of a monotonic trend in water temperature at the Hatteras site. Thus, there is no monotonic trend or unidirectional increasing or decreasing in water temperature observed at this site over time. 
+The Wrightsville water temperature time series plot, Wrightsville_Monthly_WaterTemp, and analyses suggest a relatively uniform, mildly fluctuating distribution of water temperature over time. The seasonal Mann Kendall test resulted in a score of 4, a tau value of (0.006) and p-value of (0.92). Since the p value is greater than significance level(0.05), we accept our null hypothesis that there is not a monotonic trend present. Removal of seasonality resulted in a score of 100, tau of (0.116), and also, a non-statistically significant 2-sided pvalue of (0.84) demonstrating that the removal of seasonality also rejects the presence of a monotonic trend in water temperature at the Hatteras site. Thus, there is no monotonic trend or unidirectional increasing or decreasing in water temperature observed at this site over time. 
 
 ## Testing stastically significant relationship between sea level and water temperature
 
@@ -696,9 +697,9 @@ correlation.plot<- ggcorrplot(Correlation.kendall)
 
 ### Correlation Test Between Sea Level and Water Temperature
 
-According to the Kendall's rank correlation test, the p-value is (5.949e-08) which is smaller than significance level(0.05). This means that we reject the null hypothesis that tau is equals to 0. Therefore, the tau value (0.1853611) is statistically significant, which indicates there is a weak positive correlation between the two parameters. This means that there is a slight correlation that indicates when one value increases, the other will increases. 
+According to the Kendall's rank correlation test for sea level and water temperature measurements, Correlation.kendall, the p-value is (5.949e-08) which is smaller than the significance level of 0.05. This means that we reject the null hypothesis that there is not a statistically significant relationship between sea level and water temperature. Therefore, the tau value (0.1853611) is statistically significant, which measures a weak positive correlation between the two parameters. This means that there is a slight correlation that indicates when one value increases, the other will increase. 
 
-A simple correlation test between the two variables finds a slightly stronger relationship with a correlation coefficient of (0.216857). This test also indicated a slightly positive correlation between sea level and water temperature at the three sites.
+A simple correlation test between the two variables (correlation.combined) finds a slightly stronger relationship with a correlation coefficient of (0.216857). This test also indicated a slightly positive correlation between sea level and water temperature at the three sites.
 
 ## Question 1: 
 How have sea level trends and water temperature trends changed over time and 
@@ -713,25 +714,23 @@ water temperature?
 \newpage
 # Summary and Conclusions
 
-From the time series analysis, we observed a increasing trend present
-in sea level for all three sites. Beaufort, with seasonality (Mann-Kandall; tau=0.447, p < 2.94e^-13) and without seasonality (Mann-Kandall; tau=0.413, p < 2.22e^-16), both tau values  were statistically significant. In Hatteras, with seasonality (Mann-Kandall; tau=0.274, p < 1.86e^-5) and 
-without seasonality (Mann-Kandall; tau=0.273, p < 1.31e^-6), both tau values are significant. 
-In Wrightsville, with seasonality (Mann-Kandall; tau=0.242, p < 0.0002) and without seasonality (Mann-Kandall; tau=0.299, p < 2.38e-7), both tau values were statistically significant. 
+From the time series analysis, we observed an increasing trend present
+in sea level measurements for all three sites. Beaufort, with seasonality considered (Mann-Kandall; tau=0.447, p < 2.94e^-13) and without seasonality considered (Mann-Kandall; tau=0.413, p < 2.22e^-16), had statistically significant tau values and demonstrated an upward trend in sea level. In Hatteras, with seasonality considered (Mann-Kandall; tau=0.274, p < 1.86e^-5) and 
+without seasonality considered (Mann-Kandall; tau=0.273, p < 1.31e^-6) had statistically significant tau values and demonstrated an upward trend in sea level.
+In Wrightsville, with seasonality considered (Mann-Kandall; tau=0.242, p < 0.0002) and without seasonality considered (Mann-Kandall; tau=0.299, p < 2.38e-7), had statistically significant tau values and demonstrated an upward trend in sea level.
 
-However, monotonic increase of water temperature 
-over time was only observed in Beaufort. Beaufort, with seasonality (Mann-Kandall; tau=0.288, p < 1.96e^-5) and without seasonality (Mann-Kandall; tau=0.228, p < 0.0001), both tau values were statistically significant. In Hatteras, with seasonality (Mann-Kandall; tau=0.0152, p < 0.82 and 
-without seasonality (Mann-Kandall; tau=-0.00625, p < 0.92), both tau values are not statistically significant. In Wrightsville, with seasonality (Mann-Kandall; tau=0.006, p < 0.92) and without seasonality (Mann-Kandall; tau=0.116, p < 0.84), both tau values are not statistically significant.  
+However, monotonic increase of water temperature over time was only observed in Beaufort. Beaufort, with seasonality considered (Mann-Kandall; tau=0.288, p < 1.96e^-5) and without seasonality considered (Mann-Kandall; tau=0.228, p < 0.0001), had statistically significant tau values and demonstrated an upward trend in water temperature. In Hatteras, with seasonality considered (Mann-Kandall; tau=0.0152, p < 0.82 and 
+without seasonality considered (Mann-Kandall; tau=-0.00625, p < 0.92), had tau values that were not statistically significant. In Wrightsville, with seasonality considered (Mann-Kandall; tau=0.006, p < 0.92) and without seasonality considered (Mann-Kandall; tau=0.116, p < 0.84), had tau values that are not statisitcally significant.
+Sea level has been increasing over all three sites, while only Beaufort has had increasing water temperature over time. Seasonality did not play a significant role at three sites in North Carolina. 
 
-Sea level has been increasing over all three sites, while only Beaufort has increasing water temperature over time. Seasonality did not play role at three sites in North Carolina. 
-
-From Kandall's rank correlation test, we got p-value of (5.949e-08), thus a
-statistically significant value of tau(0.1853611). Since tau is small positive, 
-we concluded that there is a weak positive correlation between the sea level and 
-water temperature. This indicates that when there is an increase in sea level, 
-there will be an increase of water temperature.
+The Kandall's rank correlation test produced a p-value of (5.949e-08), thus a
+statistically significant value of tau (0.1853611) indicates a weak positive correlation between sea level and water temperature. This indicates that when there is an increase in sea level, 
+there will be an increase of water temperature and vice versa.
 
 
 \newpage
 
 # References
-<add references here if relevant, otherwise delete this section> 
+US DOC/NOAA/NWS/NDBC > National Data Buoy Center (1971). Meteorological and oceanographic data collected from the National Data Buoy Center Coastal-Marine Automated Network (C-MAN) and moored (weather) buoys. Standard Meteorological Data, Historical Data. NOAA National Centers for Environmental Information. Dataset. https://www.ncei.noaa.gov/archive/accession/NDBC-CMANWx. Accessed December 1, 2022.
+
+US DOC/NOAA/NWS/NDBC > Tides & Currents (1982). High and Low Water Conditions. Water Level and Water Temperature Data. NOAA National Centers for Environmental Information. Dataset. https://tidesandcurrents.noaa.gov/map/index.html?region=North%20Carolina. Accessed November 26, 2022.
