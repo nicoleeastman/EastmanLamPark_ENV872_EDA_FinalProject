@@ -688,11 +688,8 @@ Correlation.kendall
 
 correlation.combined<- data.frame(combined.sea.level.correlation.edits[,3], combined.water.temp.correlation.edits[,4])
 names(correlation.combined) <- c("MSL", "WTMP")
-abline(lm(MSL~WTMP, data=correlation.combined))
 cor(correlation.combined)
 
-##Plot correlation
-correlation.plot<- ggcorrplot(Correlation.kendall)
 ```
 
 ### Correlation Test Between Sea Level and Water Temperature
